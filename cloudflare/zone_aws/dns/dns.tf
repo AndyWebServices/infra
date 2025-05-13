@@ -117,15 +117,6 @@ resource "cloudflare_record" "terraform_managed_resource_5721a200909af0b88d0a317
   zone_id = "6dfb9abb8a292cebb7a9be4944886e29"
 }
 
-resource "cloudflare_record" "terraform_managed_resource_a4840dc2e4710a5c0a46ee203f81163b" {
-  content = "\"v=DKIM1; h=sha256; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiweykoi+o48IOGuP7GR3X0MOExCUDY/BCRHoWBnh3rChl7WhdyCxW3jgq1daEjPPqoi7sJvdg5hEQVsgVRQP4DcnQDVjGMbASQtrY4WmB1VebF+RPJB2ECPsEDTpeiI5ZyUAwJaVX7r6bznU67g7LvFq35yIo4sdlmtZGV+i0H4cpYH9+3JJ78k\" \"m4KXwaf9xUJCWF6nxeD+qG6Fyruw1Qlbds2r85U9dkNDVAS3gioCvELryh1TxKGiVTkg4wqHTyHfWsp7KD3WQHYJn0RyfJJu6YEmL77zonn7p2SRMvTMP3ZEXibnC9gz3nnhR6wcYL8Q7zXypKTMD58bTixDSJwIDAQAB\""
-  name    = "cf2024-1._domainkey"
-  proxied = false
-  ttl     = 1
-  type    = "TXT"
-  zone_id = "6dfb9abb8a292cebb7a9be4944886e29"
-}
-
 resource "cloudflare_record" "terraform_managed_resource_187638dbc29ab5a0513329df2c737558" {
   content = "v=DMARC1; p=quarantine;"
   name    = "_dmarc"
