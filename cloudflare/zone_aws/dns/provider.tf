@@ -1,9 +1,23 @@
 terraform {
   required_providers {
     cloudflare = {
-      source = "cloudflare/cloudflare"
+      source  = "cloudflare/cloudflare"
       version = "~> 4"
     }
+  }
+
+  backend "s3" {
+    # access_key pulled from $AWS_ACCESS_KEY_ID
+    # secret_access_key pulled from $AWS_SECRET_ACCESS_KEY
+    bucket   = "gh-aws-infra"
+    key      = "cloudflare/zone_aws/dns/terraform.state"
+    region   = "us-west-004"
+    endpoint = "s3.us-west-004.backblazeb2.com"
+
+    skip_region_validation      = true
+    skip_requesting_account_id  = true
+    skip_credentials_validation = true
+    skip_metadata_api_check     = true
   }
 }
 
@@ -22,4 +36,3 @@ variable "account_id" {
 variable "domain" {
   default = "andywebservices.com"
 }
-
