@@ -27,6 +27,17 @@ jobs:
       - uses: actions/checkout@v3
       - uses: opentofu/setup-opentofu@v1
 
+      - name: Load secret
+        uses: 1password/load-secrets-action@v2
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+          AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
+          AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
+
       - name: OpenTofu fmt
         id: fmt
         run: tofu fmt -check
