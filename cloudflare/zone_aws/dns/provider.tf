@@ -14,6 +14,7 @@ terraform {
     region   = "us-west-004"
     endpoint = "s3.us-west-004.backblazeb2.com"
 
+    skip_s3_checksum            = true
     skip_region_validation      = true
     skip_requesting_account_id  = true
     skip_credentials_validation = true
