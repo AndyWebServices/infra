@@ -1,4 +1,4 @@
-export CLOUDFLARE_API_TOKEN="op://Private/cjjzwd3qngerj6jzvu3g3y2wse/credential"
+export CLOUDFLARE_API_TOKEN="op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token"
 
-export AWS_ACCESS_KEY_ID="op://Private/Backblaze gh-aws-infra key/keyID"
-export AWS_SECRET_ACCESS_KEY="op://Private/Backblaze gh-aws-infra key/applicationKey"
+export AWS_ACCESS_KEY_ID="op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID"
+export AWS_SECRET_ACCESS_KEY="op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey"
