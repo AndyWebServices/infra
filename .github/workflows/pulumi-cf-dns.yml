@@ -1,4 +1,4 @@
-name: Pulumi on PR
+name: Pulumi Cloudflare DNS on PR
 
 on:
   push:

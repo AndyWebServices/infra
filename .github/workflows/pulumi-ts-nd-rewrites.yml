@@ -1,4 +1,4 @@
-name: Pulumi on PR
+name: Pulumi tailscale nextdns rewrite on PR
 
 on:
   push:
