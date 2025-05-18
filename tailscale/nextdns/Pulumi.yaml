@@ -2,3 +2,7 @@ name: infra-tailscale-nextdns-rewrites
 description: Maintains nextdns rewrites based on tailscale tags
 runtime:
   name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+
