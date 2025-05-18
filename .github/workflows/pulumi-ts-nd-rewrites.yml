@@ -35,7 +35,7 @@ jobs:
       - uses: pulumi/actions@v6
         id: preview
         with:
-          work-dir: 'cloudflare/nextdns_rewrites/'
+          work-dir: 'tailscale/nextdns/'
           command: preview
           stack-name: AndyWebServices/infra-tailscale-nextdns-rewrites/prod
           comment-on-pr: true
