@@ -1,2 +1,2 @@
 config:
-  aws-infra:zoneId: '6dfb9abb8a292cebb7a9be4944886e29'
+  infra-cf-zone-aws:zoneId: 6dfb9abb8a292cebb7a9be4944886e29

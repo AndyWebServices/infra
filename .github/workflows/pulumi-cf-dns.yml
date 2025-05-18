@@ -1,4 +1,4 @@
-name: OpenTofu on PR
+name: Pulumi on PR
 
 on:
   push:
@@ -6,115 +6,35 @@ on:
       - main
   pull_request:
     paths:
-      - 'cloudflare/zone_aws/dns/*.yml'
+      - 'cloudflare/zone_aws/dns/*.yaml'
       - 'cloudflare/zone_aws/*.yaml'
-      - '.github/workflows/tofu-cf-aws-dns.yml'
+      - '.github/workflows/pulumi-cf-dns.yml'
 
 jobs:
-  tofu:
-    name: Tofu
+  preview:
+    name: Preview
     runs-on: ubuntu-latest
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
     defaults:
       run:
-        working-directory: 'cloudflare/zone_aws/dns/'
+        working-directory: 'cloudflare/zone_aws/'
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: opentofu/setup-opentofu@v1
+      - uses: actions/checkout@v4
 
-      - name: Load secret
+      - name: Load 1Password secrets
         uses: 1password/load-secrets-action@v2
         with:
           # Export loaded secrets as environment variables
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          PULUMI_ACCESS_TOKEN: op://Private/erwwjn5wri7bo3uqhh6vrgg35e/credential
           CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
-          AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
-          AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
 
-      - name: OpenTofu fmt
-        id: fmt
-        run: tofu fmt -check
-        continue-on-error: true
-
-      - name: OpenTofu Init
-        id: init
-        run: tofu init
-
-      - name: OpenTofu Validate
-        id: validate
-        run: tofu validate -no-color
-
-      - name: OpenTofu Plan
-        id: plan
-        run: tofu plan -no-color
-        continue-on-error: true
-
-      - name: OpenTofu Apply On Push
-        if: github.event_name == 'push'
-        id: apply
-        run: tofu apply -no-color
-
-      - uses: actions/github-script@v6
-        if: github.event_name == 'pull_request'
-        env:
-          PLAN: "tofu\n${{ steps.plan.outputs.stdout }}"
+      - uses: pulumi/actions@v6
+        id: preview
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            // 1. Retrieve existing bot comments for the PR
-            const { data: comments } = await github.rest.issues.listComments({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-            })
-            const botComment = comments.find(comment => {
-              return comment.user.type === 'Bot' && comment.body.includes('OpenTofu Format and Style')
-            })
-
-            // 2. Prepare format of the comment
-            const output = `#### OpenTofu Format and Style 🖌\`${{ steps.fmt.outcome }}\`
-            #### OpenTofu Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### OpenTofu Validation 🤖\`${{ steps.validate.outcome }}\`
-            <details><summary>Validation Output</summary>
-
-            \`\`\`\n
-            ${{ steps.validate.outputs.stdout }}
-            \`\`\`
-
-            </details>
-
-            #### OpenTofu Plan 📖\`${{ steps.plan.outcome }}\`
-
-            <details><summary>Show Plan</summary>
-
-            \`\`\`\n
-            ${process.env.PLAN}
-            \`\`\`
-
-            </details>
-
-            *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`cloudflare/zone_aws/dns/\`, Workflow: \`${{ github.workflow }}\`*`;
-
-            // 3. If we have a comment, update it, otherwise create a new one
-            if (botComment) {
-              github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: output
-              })
-            } else {
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: output
-              })
-            }
+          command: preview
+          stack-name: AndyWebServices/infra-cf-zone-aws/prod
+          comment-on-pr: true
