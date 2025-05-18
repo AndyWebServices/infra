@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     paths:
-      - 'tailscale/nextdns_rewrites/*.yaml'
+      - 'tailscale/nextdns/*.yaml'
       - '.github/workflows/pulumi-ts-nd-rewrites.yml'
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: 'tailscale/nextdns_rewrites/'
+        working-directory: 'tailscale/nextdns/'
     permissions:
       pull-requests: write
     steps:
@@ -26,7 +26,7 @@ jobs:
         with:
           python-version: 3.12
 
-      - name: Installing dependencies 📦️
+      - name: Installing dependencies
         run: pip install -r requirements.txt
 
       - name: Load 1Password secrets
