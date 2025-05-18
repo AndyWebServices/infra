@@ -1,0 +1,21 @@
+name: aws-infra
+description: IaC for AndyWebServices
+runtime:
+  name: yaml
+  options:
+    compiler: ./merge.sh
+
+
+config:
+  cloudflare:apiToken:
+    value: ''
+
+resources:
+  www:
+    type: cloudflare:Record
+    properties:
+      name: 'www'
+      ttl: 60
+      type: 'CNAME'
+      content: '@'
+      zoneId: ${zoneId}

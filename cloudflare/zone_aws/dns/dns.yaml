@@ -1,0 +1,25 @@
+resources:
+  a_root:
+    type: cloudflare:Record
+    properties:
+      name: '@'
+      type: 'A'
+      ttl: 1
+      content: '204.14.39.222'
+      zoneId: ${zoneId}
+  a_authentik:
+    type: cloudflare:Record
+    properties:
+      name: 'authentik'
+      type: 'A'
+      ttl: 1
+      content: '64.181.210.163'
+      zoneId: ${zoneId}
+  cname_lldap_to_authentik:
+    type: cloudflare:Record
+    properties:
+      name: 'lldap'
+      type: 'CNAME'
+      ttl: 1
+      content: 'authentik'
+      zoneId: ${zoneId}

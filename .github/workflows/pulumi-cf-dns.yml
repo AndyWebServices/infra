@@ -6,8 +6,8 @@ on:
       - main
   pull_request:
     paths:
-      - 'cloudflare/zone_aws/dns/*.tf'
-      - 'cloudflare/zone_aws/dns/*.tfvars'
+      - 'cloudflare/zone_aws/dns/*.yml'
+      - 'cloudflare/zone_aws/*.yaml'
       - '.github/workflows/tofu-cf-aws-dns.yml'
 
 jobs:
