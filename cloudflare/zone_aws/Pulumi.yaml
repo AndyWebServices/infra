@@ -1,0 +1,6 @@
+name: infra-cf-zone-aws
+description: IaC for AndyWebServices
+runtime:
+  name: yaml
+  options:
+    compiler: ./merge.sh

@@ -1,0 +1,41 @@
+name: Pulumi on PR
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'cloudflare/zone_aws/dns/*.yaml'
+      - 'cloudflare/zone_aws/*.yaml'
+      - '.github/workflows/pulumi-cf-dns.yml'
+
+jobs:
+  preview:
+    name: Preview
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'cloudflare/zone_aws/'
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Load 1Password secrets
+        uses: 1password/load-secrets-action@v2
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          PULUMI_ACCESS_TOKEN: op://aws-svcs/t64a4xf274evgaef62gohwzeqa/credential
+          CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+
+      - uses: pulumi/actions@v6
+        id: preview
+        with:
+          work-dir: 'cloudflare/zone_aws/'
+          command: preview
+          stack-name: AndyWebServices/infra-cf-zone-aws/prod
+          comment-on-pr: true
