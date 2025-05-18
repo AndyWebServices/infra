@@ -1,0 +1,4 @@
+config:
+  infra-tailscale-nextdns-rewrites:tagName: 'tag:nextdns'
+  infra-tailscale-nextdns-rewrites:nextdnsProfileId: '8d2963'
+  infra-tailscale-nextdns-rewrites:mainDomain: 'andywebservices.com'

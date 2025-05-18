@@ -1,5 +1,5 @@
 name: infra-cf-zone-aws
-description: IaC for AndyWebServices
+description: Cloudflare dns records for zone andywebservices.com
 runtime:
   name: yaml
   options:
