@@ -7,7 +7,7 @@ config = pulumi.Config(pulumi.get_project())
 nextdns_tag = config.require('tagName')
 nextdns_profile_id = config.require('nextdnsProfileId')
 second_level_domain = config.require('secondLevelDomain')
-additionalHostnames = config.require_object('additionalHostnames')
+additionalHostnames = config.get_object('additionalHostnames', default={})
 
 ts_devices = tailscale.get_devices()
 for ts_device in ts_devices.devices:

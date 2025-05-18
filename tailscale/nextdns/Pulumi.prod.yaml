@@ -4,6 +4,4 @@ config:
   infra-tailscale-nextdns-rewrites:secondLevelDomain: 'andywebservices.com'
 
   # Value below should be a dictionary of lists
-  infra-tailscale-nextdns-rewrites:additionalHostnames:
-    overlord:
-      - pihole
+  # infra-tailscale-nextdns-rewrites:additionalHostnames:
