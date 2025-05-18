@@ -1,4 +1,7 @@
 config:
   infra-tailscale-nextdns-rewrites:tagName: 'tag:nextdns'
   infra-tailscale-nextdns-rewrites:nextdnsProfileId: '8d2963'
-  infra-tailscale-nextdns-rewrites:mainDomain: 'andywebservices.com'
+  infra-tailscale-nextdns-rewrites:secondLevelDomain: 'andywebservices.com'
+
+  # Value below should be a dictionary of lists
+  # infra-tailscale-nextdns-rewrites:additionalHostnames:

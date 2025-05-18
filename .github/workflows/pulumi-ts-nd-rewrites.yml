@@ -21,14 +21,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.12
-
-      - name: Installing dependencies
-        run: pip install -r requirements.txt
-
       - name: Load 1Password secrets
         uses: 1password/load-secrets-action@v2
         with:
