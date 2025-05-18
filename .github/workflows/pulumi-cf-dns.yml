@@ -29,7 +29,7 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          PULUMI_ACCESS_TOKEN: op://Private/erwwjn5wri7bo3uqhh6vrgg35e/credential
+          PULUMI_ACCESS_TOKEN: op://aws-svcs/t64a4xf274evgaef62gohwzeqa/credential
           CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
 
       - uses: pulumi/actions@v6
