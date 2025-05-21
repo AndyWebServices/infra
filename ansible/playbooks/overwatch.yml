@@ -8,6 +8,7 @@
         op inject --force -i secrets/overwatch-secret.yml.tpl -o secrets/overwatch-secret.yml
       args:
         chdir: "{{ playbook_dir }}"
+      changed_when: false
 
 - name: Setup traefik on overwatch
   hosts: overwatch

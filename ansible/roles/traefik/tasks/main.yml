@@ -39,7 +39,7 @@
   ansible.builtin.template:
     src: templates/traefik.yaml.j2
     dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/config/traefik.yaml"
-    mode: '0644'
+    mode: "0644"
 
 - name: Render traefik docker-compose.yml on remote
   ansible.builtin.template:
