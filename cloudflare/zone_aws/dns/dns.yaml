@@ -34,7 +34,7 @@ resources:
   cname_whoami_overwatch_to_overwatch:
     type: cloudflare:Record
     properties:
-      name: 'whoami.overwatch.andywebservices.com'
+      name: 'whoami.overwatch'
       type: 'CNAME'
       ttl: 1
       content: 'overwatch.andywebservices.com'
