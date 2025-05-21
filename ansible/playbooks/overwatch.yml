@@ -1,0 +1,8 @@
+- name: Setup traefik on host
+  hosts: overwatch
+  gather_facts: false
+  vars_files:
+    - secrets/overwatch-secret.yml
+
+  roles:
+    - traefik

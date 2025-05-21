@@ -1,0 +1,12 @@
+- name: Setup traefik on host
+  hosts: all
+  gather_facts: false
+  become: true
+
+  roles:
+    - common
+
+  vars:
+    common_docker_networks:
+      - lsio
+      - lsio-aws
