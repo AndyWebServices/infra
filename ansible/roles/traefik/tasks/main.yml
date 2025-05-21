@@ -53,7 +53,7 @@
     state: directory
     mode: "0755"
   loop:
-    - "../../docker_composes/{{ inventory_hostname}}/{{ container_name }}/"
+    - "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/"
   delegate_to: localhost
 
 - name: Render traefik docker-compose.yml on local
@@ -65,7 +65,7 @@
 
 - name: Render traefik .env
   ansible.builtin.template:
-    src: templates/.env.tpl.j2
-    dest: "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/.env.tpl"
+    src: templates/.env.j2
+    dest: "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/.env"
     mode: "0644"
   delegate_to: localhost

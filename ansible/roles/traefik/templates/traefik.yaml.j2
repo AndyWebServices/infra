@@ -27,7 +27,7 @@ certificatesResolvers:
   zerossl:
     acme:
       caServer: "https://acme.zerossl.com/v2/DV90"
-      email: admin@andywebservices.com
+      email: {{ admin_email }}
       storage: /var/traefik/certs/zerossl-acme.json
       dnsChallenge:
         provider: cloudflare
