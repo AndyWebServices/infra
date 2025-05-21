@@ -1,3 +1,4 @@
+---
 - name: Setup traefik on host
   hosts: all
   gather_facts: false

@@ -1,12 +1,13 @@
+---
 - name: Gather only network facts
-  setup:
+  ansible.builtin.setup:
     gather_subset:
       - network
 
 - name: Fetch all important ip addresses
-  set_fact:
-    container_name: 'traefik-docker'
-    network_name: 'lsio'
+  ansible.builtin.set_fact:
+    container_name: "traefik-docker"
+    network_name: "lsio"
     public_ipv4: >-
       {{ ansible_facts['default_ipv4']['address'] }}
     public_ipv6: >-
@@ -17,7 +18,7 @@
       {{ ansible_facts['tailscale0']['ipv6'] | selectattr('scope', 'equalto', 'global') | map(attribute='address') | list | first }}
 
 - name: Show all important IP addresses
-  debug:
+  ansible.builtin.debug:
     msg: |
       Default IPv4: {{ public_ipv4 }}
       Default IPv6: {{ public_ipv6 }}
@@ -25,36 +26,37 @@
       Tailscale IPv6: {{ tailscale_ipv6 }}
 
 - name: Ensure directories for Traefik exist
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
-    mode: '0755'
+    mode: "0755"
   loop:
     - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/"
     - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/config"
     - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/certs"
 
 - name: Render traefik config.yml
-  template:
+  ansible.builtin.template:
     src: templates/traefik.yaml.j2
     dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/config/traefik.yaml"
+    mode: '0644'
 
 - name: Render traefik docker-compose.yml
-  template:
+  ansible.builtin.template:
     src: templates/docker-compose.yml.j2
     dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/docker-compose.yml"
-    mode: '0644'
+    mode: "0644"
 
 - name: Render traefik docker-compose.yml
-  template:
+  ansible.builtin.template:
     src: templates/docker-compose.yml.j2
     dest: "../../docker_composes/{{ inventory_hostname }}/docker-compose.yml"
-    mode: '0644'
+    mode: "0644"
   delegate_to: localhost
 
 - name: Render traefik .env
-  template:
+  ansible.builtin.template:
     src: templates/.env.tpl.j2
     dest: "../../docker_composes/{{ inventory_hostname }}/.env.tpl"
-    mode: '0644'
+    mode: "0644"
   delegate_to: localhost

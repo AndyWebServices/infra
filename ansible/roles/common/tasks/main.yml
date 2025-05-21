@@ -1,12 +1,13 @@
+---
 - name: Install Python docker package via geerlingguy.pip
-  include_role:
+  ansible.builtin.include_role:
     name: geerlingguy.pip
   vars:
     pip_install_packages:
       - name: docker
 
 - name: Install Docker engine via geerlingguy.docker
-  include_role:
+  ansible.builtin.include_role:
     name: geerlingguy.docker
 
 - name: Create Docker networks
@@ -17,9 +18,9 @@
   loop: "{{ common_docker_networks }}"
 
 - name: Set Tailscale Auth Key
-  set_fact:
+  ansible.builtin.set_fact:
     tailscale_authkey: "{{ lookup('env', 'TAILSCALE_KEY') }}"
 
 - name: Install Tailscale
-  include_role:
+  ansible.builtin.include_role:
     name: artis3n.tailscale
