@@ -35,28 +35,37 @@
     - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/config"
     - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/certs"
 
-- name: Render traefik config.yml
+- name: Render traefik config.yml on remote
   ansible.builtin.template:
     src: templates/traefik.yaml.j2
     dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/config/traefik.yaml"
     mode: '0644'
 
-- name: Render traefik docker-compose.yml
+- name: Render traefik docker-compose.yml on remote
   ansible.builtin.template:
     src: templates/docker-compose.yml.j2
     dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}/docker-compose.yml"
     mode: "0644"
 
-- name: Render traefik docker-compose.yml
+- name: Ensure directories for Traefik exist locally
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "../../docker_composes/{{ inventory_hostname}}/{{ container_name }}/"
+  delegate_to: localhost
+
+- name: Render traefik docker-compose.yml on local
   ansible.builtin.template:
     src: templates/docker-compose.yml.j2
-    dest: "../../docker_composes/{{ inventory_hostname }}/docker-compose.yml"
+    dest: "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/docker-compose.yml"
     mode: "0644"
   delegate_to: localhost
 
 - name: Render traefik .env
   ansible.builtin.template:
     src: templates/.env.tpl.j2
-    dest: "../../docker_composes/{{ inventory_hostname }}/.env.tpl"
+    dest: "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/.env.tpl"
     mode: "0644"
   delegate_to: localhost
