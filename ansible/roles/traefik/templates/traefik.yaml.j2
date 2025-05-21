@@ -27,16 +27,29 @@ certificatesResolvers:
   zerossl:
     acme:
       caServer: "https://acme.zerossl.com/v2/DV90"
-      email: admin@andywebservices.com
+      email: {{ admin_email }}
       storage: /var/traefik/certs/zerossl-acme.json
       dnsChallenge:
         provider: cloudflare
         resolvers:
           - "1.1.1.1:53"
-          - "1.0.0.1:53"
+          - "8.8.8.8:53"
       eab:
         kid: {{ eab_kid }}
         hmacEncoded: {{ eab_hmac_key }}
+      certificatesDuration: 30
+      # Uncomment the below after features are released
+      # clientTimeout: 300s
+      # clientResponseHeaderTimeout: 300s
+  letsencrypt:
+    acme:
+      email: {{ admin_email }}
+      storage: /var/traefik/certs/letsencrypt-acme.json
+      dnsChallenge:
+        provider: cloudflare
+        resolvers:
+          - "1.1.1.1:53"
+          - "8.8.8.8:53"
 
 providers:
   docker:

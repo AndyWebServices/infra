@@ -42,3 +42,4 @@ terraform.rc
 .secrets
 .idea/
 .env
+/ansible/playbooks/secrets/overwatch-secret.yml

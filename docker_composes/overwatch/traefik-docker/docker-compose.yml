@@ -3,7 +3,7 @@
 services:
   traefik:
     image: docker.io/library/traefik:latest
-    container_name: {{ container_name }}
+    container_name: traefik-docker
     ports:
       - ${PUBLIC_IPV4}:80:80
       - "[${PUBLIC_IPV6}]:80:80"
@@ -13,14 +13,14 @@ services:
       - "[${TAILSCALE_IPV6}]:8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - /home/ubuntu/docker/composes/{{ container_name }}/config/:/etc/traefik/:ro
-      - /home/ubuntu/docker/composes/{{ container_name }}/certs/:/var/traefik/certs/:rw
+      - /home/ubuntu/docker/composes/traefik-docker/config/:/etc/traefik/:ro
+      - /home/ubuntu/docker/composes/traefik-docker/certs/:/var/traefik/certs/:rw
     environment:
       - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     networks:
-      - {{ network_name }}
+      - lsio
     restart: unless-stopped
 
 networks:
-  {{ network_name }}:
+  lsio:
     external: true
