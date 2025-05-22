@@ -8,19 +8,24 @@ from dotenv import load_dotenv
 from pulumi import ResourceOptions
 from pulumi_command.remote import ConnectionArgs
 from pulumi_docker import Provider
-from pulumi_docker.outputs import ContainerPort, ContainerVolume, ContainerLabel, ContainerNetworksAdvanced
+from pulumi_docker.outputs import ContainerVolume, ContainerLabel, ContainerNetworksAdvanced
 
 load_dotenv()
 
 HOSTNAME = 'uptime'
 CONTAINER_NAME = 'uptime-kuma'
-ROUTER_NAME = 'uptime_kuma'
+ROUTER_NAME = 'uptime-kuma'
 VOLUME_HOST_PATH = f'/home/{os.environ.get("USERNAME")}/docker/composes/{CONTAINER_NAME}-docker/data'
 DOCKER_NETWORK = 'lsio'
 DOCKER_IMAGE = 'louislam/uptime-kuma:beta'
 URL = f'uptime.{os.environ['DOMAIN_NAME']}'
+STATUS_URL = f'status.{os.environ['DOMAIN_NAME']}'
 CNAME = f'overwatch.{os.environ['DOMAIN_NAME']}'
 CERT_PROVIDER = 'letsencrypt'
+
+TS_CONTAINER_NAME = 'uptime-kuma-ts'
+TS_VOLUME_HOST_PATH = f'/home/{os.environ.get("USERNAME")}/docker/composes/{TS_CONTAINER_NAME}-docker/state'
+TS_STATE_DIR = '/var/lib/tailscale'
 
 
 def _url(provider: Provider):
@@ -31,6 +36,22 @@ def _url(provider: Provider):
         f"{CONTAINER_NAME}-url",
         name=URL,
         content=CNAME,
+        ttl=1,
+        type='CNAME',
+        zone_id=pulumi.Config().require('zoneId'),
+        opts=ResourceOptions(provider=provider, delete_before_replace=True)
+    )
+    return uptime_url
+
+
+def _status_url(provider: Provider):
+    if not os.environ.get('CLOUDFLARE_API_TOKEN'):
+        raise RuntimeError('Please set the CLOUDFLARE_API_TOKEN environment variable')
+
+    uptime_url = cloudflare.DnsRecord(
+        f"{CONTAINER_NAME}-status-url",
+        name=STATUS_URL,
+        content=URL,
         ttl=1,
         type='CNAME',
         zone_id=pulumi.Config().require('zoneId'),
@@ -59,7 +80,7 @@ def _container(provider: Provider, uptime_kuma_image):
         labels=[
             ContainerLabel(label='traefik.enable', value='true'),
             ContainerLabel(label=f'traefik.http.routers.{ROUTER_NAME}.rule',
-                           value=f'Host(`{HOSTNAME}.{os.environ['DOMAIN_NAME']}`)'),
+                           value=f'Host(`{URL}`) || Host(`{STATUS_URL}`)'),
             ContainerLabel(label=f'traefik.http.routers.{ROUTER_NAME}.entrypoints', value='websecure'),
             ContainerLabel(label=f'traefik.http.routers.{ROUTER_NAME}.tls', value='true'),
             ContainerLabel(label=f'traefik.http.routers.{ROUTER_NAME}.tls.certresolver', value=CERT_PROVIDER),
@@ -68,12 +89,6 @@ def _container(provider: Provider, uptime_kuma_image):
         networks_advanced=[
             ContainerNetworksAdvanced(
                 name=DOCKER_NETWORK
-            )
-        ],
-        ports=[
-            ContainerPort(
-                internal=3001,
-                external=3001,
             )
         ],
         restart='unless-stopped',
@@ -94,5 +109,6 @@ def _container(provider: Provider, uptime_kuma_image):
 
 def uptime_kuma(provider: Provider):
     _url(provider)
+    _status_url(provider)
     uptime_kuma_image = _image(provider)
     _container(provider, uptime_kuma_image)

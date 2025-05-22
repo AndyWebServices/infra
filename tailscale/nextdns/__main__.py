@@ -13,8 +13,9 @@ ts_devices = tailscale.get_devices()
 for ts_device in ts_devices.devices:
     if nextdns_tag in ts_device.tags:
         for src_hostname in [ts_device.hostname] + additionalHostnames.get(ts_device.hostname, []):
-            NextDNSRewrite(
-                src=f"{src_hostname}.{second_level_domain}",
-                content=ts_device.name,
-                profile_id=nextdns_profile_id,
-            )
+            for address in ts_device.addresses:
+                NextDNSRewrite(
+                    src=f"{src_hostname}.{second_level_domain}",
+                    content=address,
+                    profile_id=nextdns_profile_id,
+                )
