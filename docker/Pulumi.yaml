@@ -1,0 +1,7 @@
+name: infra-docker
+description: A minimal AWS Python Pulumi program
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: .venv
