@@ -1,0 +1,20 @@
+---
+- name: Setup secrets for overlord
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Inject secrets using 1Password CLI
+      ansible.builtin.command: >
+        op inject --force -i secrets/overlord-secret.yml.tpl -o secrets/overlord-secret.yml
+      args:
+        chdir: "{{ playbook_dir }}"
+      changed_when: false
+
+- name: Setup traefik on overlord
+  hosts: overlord
+  gather_facts: false
+  vars_files:
+    - secrets/overlord-secret.yml
+
+  roles:
+    - traefik

@@ -11,7 +11,7 @@
     public_ipv4: >-
       {{ ansible_facts['default_ipv4']['address'] }}
     public_ipv6: >-
-      {{ ansible_facts['default_ipv6']['address'] }}
+      {{ ansible_facts['default_ipv6']['address'] | default('::1') }}
     tailscale_ipv4: >-
       {{ ansible_facts['tailscale0']['ipv4']['address'] }}
     tailscale_ipv6: >-
@@ -53,19 +53,19 @@
     state: directory
     mode: "0755"
   loop:
-    - "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/"
+    - "../../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/"
   delegate_to: localhost
 
 - name: Render traefik docker-compose.yml on local
   ansible.builtin.template:
     src: templates/docker-compose.yml.j2
-    dest: "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/docker-compose.yml"
+    dest: "../../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/docker-compose.yml"
     mode: "0644"
   delegate_to: localhost
 
 - name: Render traefik .env
   ansible.builtin.template:
     src: templates/.env.j2
-    dest: "../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/.env"
+    dest: "../../../docker_composes/{{ inventory_hostname }}/{{ container_name }}/.env"
     mode: "0644"
   delegate_to: localhost

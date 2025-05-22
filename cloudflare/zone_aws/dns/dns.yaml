@@ -39,3 +39,11 @@ resources:
       ttl: 1
       content: 'overwatch.andywebservices.com'
       zoneId: ${zoneId}
+  cname_whoami_aws_to_aws:
+    type: cloudflare:Record
+    properties:
+      name: 'whoami'
+      type: 'CNAME'
+      ttl: 1
+      content: 'andywebservices.com'
+      zoneId: ${zoneId}

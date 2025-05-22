@@ -43,3 +43,4 @@ terraform.rc
 .idea/
 .env
 /docker_composes/ansible/playbooks/secrets/overwatch-secret.yml
+/docker_composes/ansible/playbooks/secrets/overlord-secret.yml
