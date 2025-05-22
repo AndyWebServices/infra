@@ -30,6 +30,7 @@ jobs:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           PULUMI_ACCESS_TOKEN: op://aws-svcs/t64a4xf274evgaef62gohwzeqa/credential
           NEXTDNS_API_TOKEN: op://aws-svcs/ktcu4b6pzncz464rd5owerxsku/token
+          NEXTDNS_PROFILE_ID: op://aws-svcs/ktcu4b6pzncz464rd5owerxsku/profileId
           TAILSCALE_API_KEY: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/key
           TAILSCALE_TAILNET: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/hostname
 

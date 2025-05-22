@@ -6,16 +6,19 @@ from pulumi.dynamic import Resource, ResourceProvider, CreateResult, ReadResult,
 _nextdns_endpoint_rewrites = "https://api.nextdns.io/profiles/{profile_id}/rewrites/"
 _nextdns_endpoint_rewrites_id = "https://api.nextdns.io/profiles/{profile_id}/rewrites/{rewrite_id}"
 
+# Unpack environment variables
 api_token = os.getenv("NEXTDNS_API_TOKEN")
 if not api_token:
     raise ValueError("NEXTDNS_API_TOKEN environment variable not set")
+nextdns_profile_id = os.getenv("NEXTDNS_PROFILE_ID")
+if not nextdns_profile_id:
+    raise ValueError("NEXTDNS_PROFILE_ID environment variable not set")
 
+# NextDNS authentication header
 headers = {
     "X-Api-Key": f"{api_token}",
     "Content-Type": "application/json",
 }
-
-nextdns_profile_id = os.getenv("NEXTDNS_PROFILE_ID")
 
 
 class NextDNSProvider(ResourceProvider):
@@ -26,12 +29,8 @@ class NextDNSProvider(ResourceProvider):
         )
 
         result = next((d for d in response.json()['data'] if d.get('id') == id_), None)
-
         if result is None:
-            return ReadResult(
-                id_=None,
-                outs=props
-            )
+            return ReadResult(id_=None, outs=props)
         else:
             return ReadResult(id_=id_, outs=props | result)
 
@@ -60,7 +59,6 @@ class NextDNSProvider(ResourceProvider):
         )
 
         response.raise_for_status()
-        print(response.json())
         record_id = response.json()['data']['id']
         return CreateResult(id_=record_id, outs=props)
 
