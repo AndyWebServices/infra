@@ -10,13 +10,13 @@ additionalHostnames = {
 
 }
 
+config = pulumi.Config('infra-tailscale-nextdns-rewrites')
+nextdns_tag = config.require('tagName')
+second_level_domain = config.require('domainName')
+tailnet_suffix = os.environ.get('TAILSCALE_TAILNET')
+
 
 def ts_nextdns_rewrites():
-    config = pulumi.Config(pulumi.get_project())
-    nextdns_tag = config.require('tagName')
-    nextdns_profile_id = config.require('nextdnsProfileId')
-    second_level_domain = config.require('domainName')
-    tailnet_suffix = os.environ.get('TAILSCALE_TAILNET')
     if not tailnet_suffix:
         raise ValueError("TAILSCALE_TAILNET is required")
 
@@ -34,7 +34,6 @@ def ts_nextdns_rewrites():
             for name in [machine_name] + additionalHostnames.get(machine_name, []):
                 for address in ts_device.addresses:
                     NextDNSRewrite(
-                        src=f"{name}.{second_level_domain}",
+                        name=f"{name}.{second_level_domain}",
                         content=address,
-                        profile_id=nextdns_profile_id,
                     )
