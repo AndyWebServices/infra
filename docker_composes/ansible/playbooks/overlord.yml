@@ -10,7 +10,7 @@
         chdir: "{{ playbook_dir }}"
       changed_when: false
 
-- name: Setup traefik on overlord
+- name: Setup services on overlord
   hosts: overlord
   gather_facts: false
   vars_files:
@@ -18,3 +18,5 @@
 
   roles:
     - traefik
+    # - actual_server
+    - homeassistant
