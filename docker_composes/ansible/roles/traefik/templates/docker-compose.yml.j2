@@ -13,8 +13,8 @@ services:
       - "[${TAILSCALE_IPV6}]:8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - {{ ansible_env.HOME }}/docker/composes/{{ container_name }}/config/:/etc/traefik/:ro
-      - {{ ansible_env.HOME }}/docker/composes/{{ container_name }}/certs/:/var/traefik/certs/:rw
+      - {{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/config/:/etc/traefik/:ro
+      - {{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/certs/:/var/traefik/certs/:rw
     environment:
       - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     networks:

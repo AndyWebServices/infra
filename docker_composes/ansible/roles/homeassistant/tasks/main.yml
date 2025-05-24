@@ -6,8 +6,10 @@
 
 - name: Fetch all important ip addresses
   ansible.builtin.set_fact:
-    container_name: "traefik"
+    container_name: "ha-dummy"
     network_name: "lsio"
+    subdomain: "ha"
+    homeassistant_hostname: "homeassistant"
     public_ipv4: >-
       {{ ansible_facts['default_ipv4']['address'] }}
     public_ipv6: >-
@@ -25,29 +27,21 @@
       Tailscale IPv4: {{ tailscale_ipv4 }}
       Tailscale IPv6: {{ tailscale_ipv6 }}
 
-- name: Ensure directories for Traefik exist
+- name: Ensure directories for actual_server exist
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: "0755"
   loop:
-    - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/"
-    - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/config"
-    - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/certs"
+    - "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/data"
 
-- name: Render traefik config.yml on remote
-  ansible.builtin.template:
-    src: templates/traefik.yaml.j2
-    dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/config/traefik.yaml"
-    mode: "0644"
-
-- name: Render traefik docker-compose.yml on remote
+- name: Render actual_server docker-compose.yml on remote
   ansible.builtin.template:
     src: templates/docker-compose.yml.j2
     dest: "{{ ansible_env.HOME }}/docker/composes/{{ container_name }}-docker/docker-compose.yml"
     mode: "0644"
 
-- name: Ensure directories for Traefik exist locally
+- name: Ensure directories for actual_server exist locally
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
