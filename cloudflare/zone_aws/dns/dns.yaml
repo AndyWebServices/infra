@@ -55,3 +55,11 @@ resources:
       ttl: 1
       content: 'andywebservices.com'
       zoneId: ${zoneId}
+  cname_ha_aws_to_aws:
+    type: cloudflare:Record
+    properties:
+      name: 'ha'
+      type: 'CNAME'
+      ttl: 1
+      content: 'andywebservices.com'
+      zoneId: ${zoneId}
