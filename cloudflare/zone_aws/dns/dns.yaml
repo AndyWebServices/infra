@@ -47,3 +47,11 @@ resources:
       ttl: 1
       content: 'andywebservices.com'
       zoneId: ${zoneId}
+  cname_actual_aws_to_aws:
+    type: cloudflare:Record
+    properties:
+      name: 'actual'
+      type: 'CNAME'
+      ttl: 1
+      content: 'andywebservices.com'
+      zoneId: ${zoneId}
