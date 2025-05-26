@@ -1,0 +1,65 @@
+#resources:
+#  a_root:
+#    type: cloudflare:Record
+#    properties:
+#      name: '@'
+#      type: 'A'
+#      ttl: 1
+#      content: '204.14.39.222'
+#      zoneId: ${zoneId}
+#  a_authentik:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'authentik'
+#      type: 'A'
+#      ttl: 1
+#      content: '64.181.210.163'
+#      zoneId: ${zoneId}
+#  a_overwatch:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'overwatch'
+#      type: 'A'
+#      ttl: 1
+#      content: '207.211.170.50'
+#      zoneId: ${zoneId}
+#  cname_lldap_to_authentik:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'lldap'
+#      type: 'CNAME'
+#      ttl: 1
+#      content: 'authentik'
+#      zoneId: ${zoneId}
+#  cname_whoami_overwatch_to_overwatch:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'whoami.overwatch'
+#      type: 'CNAME'
+#      ttl: 1
+#      content: 'overwatch.andywebservices.com'
+#      zoneId: ${zoneId}
+#  cname_whoami_aws_to_aws:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'whoami'
+#      type: 'CNAME'
+#      ttl: 1
+#      content: 'andywebservices.com'
+#      zoneId: ${zoneId}
+#  cname_actual_aws_to_aws:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'actual'
+#      type: 'CNAME'
+#      ttl: 1
+#      content: 'andywebservices.com'
+#      zoneId: ${zoneId}
+#  cname_ha_aws_to_aws:
+#    type: cloudflare:Record
+#    properties:
+#      name: 'ha'
+#      type: 'CNAME'
+#      ttl: 1
+#      content: 'andywebservices.com'
+#      zoneId: ${zoneId}
