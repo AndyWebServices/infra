@@ -33,6 +33,9 @@ jobs:
           CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
           AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
+          TF_VAR_overlord_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overlord_ipv4
+          TF_VAR_authentik_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/authentik_ipv4
+          TF_VAR_overwatch_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overwatch_ipv4
 
       - name: OpenTofu fmt
         id: fmt
