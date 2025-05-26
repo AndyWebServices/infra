@@ -1,0 +1,85 @@
+# Configure ipv4, ipv6, and cname records here!!
+locals {
+  dns_entries = {
+    overlord = {
+      ipv4   = var.overlord_ipv4
+      cnames = ["whoami", "actual", "ha"]
+    }
+    authentik = {
+      ipv4   = var.authentik_ipv4
+      cnames = ["lldap"]
+    }
+    overwatch = {
+      ipv4   = var.overwatch_ipv4
+      cnames = ["whoami.overwatch"]
+    }
+  }
+}
+
+locals {
+  # DO NOT CONFIGURE THE BELOW!!
+  cname_map = {
+    # Flatten dns_entries map into a list of objects, then convert to map string -> object that we can for_each over
+    for triple in flatten([
+      for domain, data in local.dns_entries : [
+        for cname in data.cnames : {
+          key    = "${domain}-${cname}"
+          domain = domain
+          cname  = cname
+        }
+      ]
+      ]) : triple.key => {
+      domain = triple.domain
+      cname  = triple.cname
+    }
+  }
+}
+
+# Create all A records
+resource "cloudflare_dns_record" "a_records" {
+  for_each = local.dns_entries
+
+  name    = "${each.key}.${var.domain}"
+  content = each.value.ipv4
+  proxied = true
+  ttl     = 1
+  zone_id = var.zone_id
+  type    = "A"
+  comment = var.comment
+}
+
+# Create all AAAA records
+# resource "cloudflare_dns_record" "a_records" {
+#   for_each = var.dns_entries
+#
+#   name    = "${each.key}.${var.domain}"
+#   content = each.value.ipv6
+#   proxied = true
+#   ttl     = 1
+#   zone_id = var.zone_id
+#   type    = "AAAAA"
+#   comment = var.comment
+# }
+
+# Create all CNAME records
+resource "cloudflare_dns_record" "cname_records" {
+  for_each = local.cname_map
+
+  name    = "${each.value.cname}.${var.domain}"
+  content = each.value.domain
+  type    = "CNAME"
+  ttl     = 1
+  proxied = true
+  zone_id = var.zone_id
+  comment = var.comment
+}
+
+# Create misc TXT record
+resource "cloudflare_dns_record" "txt_kerberos" {
+  name    = "_kerberos.${var.domain}"
+  type    = "TXT"
+  ttl     = 1
+  content = "ANDYWEBSERVICES.COM"
+  zone_id = var.zone_id
+  comment = var.comment
+}
