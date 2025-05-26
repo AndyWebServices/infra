@@ -2,15 +2,15 @@
 locals {
   dns_entries = {
     overlord = {
-      ipv4 = var.overlord_ipv4
+      ipv4   = var.overlord_ipv4
       cnames = ["whoami", "actual", "ha"]
     }
     authentik = {
-      ipv4 = var.authentik_ipv4
+      ipv4   = var.authentik_ipv4
       cnames = ["lldap"]
     }
     overwatch = {
-      ipv4 = var.overwatch_ipv4
+      ipv4   = var.overwatch_ipv4
       cnames = ["whoami.overwatch"]
     }
   }
@@ -28,7 +28,7 @@ locals {
           cname  = cname
         }
       ]
-    ]) : triple.key => {
+      ]) : triple.key => {
       domain = triple.domain
       cname  = triple.cname
     }
