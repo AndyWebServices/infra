@@ -41,7 +41,7 @@ resource "cloudflare_dns_record" "a_records" {
 
   name    = "${each.key}.${var.domain}"
   content = each.value.ipv4
-  proxied = false
+  proxied = true
   ttl     = 1
   zone_id = var.zone_id
   type    = "A"
@@ -69,7 +69,7 @@ resource "cloudflare_dns_record" "cname_records" {
   content = "${each.value.domain}.${var.domain}"
   type    = "CNAME"
   ttl     = 1
-  proxied = false
+  proxied = true
   zone_id = var.zone_id
   comment = var.comment
 }
