@@ -1,5 +1,0 @@
-pulumi
-pulumi-cloudflare
-pulumi-command
-pulumi-docker
-python-dotenv
