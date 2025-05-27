@@ -35,6 +35,8 @@ jobs:
 
           TAILSCALE_API_KEY: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/key
           TAILSCALE_TAILNET: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
+          TF_VAR_member_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/admin_user
+          TF_VAR_admin_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/member_user
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu

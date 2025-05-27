@@ -1,5 +1,5 @@
 resource "tailscale_acl" "as_json" {
-  acl = jsonencode(// Example/default ACLs for unrestricted connections.
+  acl = jsonencode( // Example/default ACLs for unrestricted connections.
     {
       "groups" : {
         "group:server_admins" : [
@@ -9,7 +9,7 @@ resource "tailscale_acl" "as_json" {
 
       // Define the tags which can be applied to devices and by which users.
       "tagOwners" : {
-        "tag:server" : ["autogroup:admin"], // Allows all :53, :67, :8888
+        "tag:server" : ["autogroup:admin"],  // Allows all :53, :67, :8888
         "tag:webhost" : ["autogroup:admin"], // Allows all :80, :443
         "tag:it" : ["autogroup:admin"],
         "tag:promiscuous" : ["autogroup:admin"],
@@ -73,7 +73,7 @@ resource "tailscale_acl" "as_json" {
         // Test if autogroup:member can access webhosts
         {
           "src" : var.member_user,
-          "accept" : ["overwatch:443", "unifi-cal:443",],
+          "accept" : ["overwatch:443", "unifi-cal:443", ],
         },
         // Test if overwatch can access webhosts
         {
@@ -81,5 +81,5 @@ resource "tailscale_acl" "as_json" {
           "accept" : ["pikvm:443"],
         },
       ],
-    })
+  })
 }
