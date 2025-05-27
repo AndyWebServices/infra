@@ -6,8 +6,12 @@ import tldextract
 
 from nextdns_provider import NextDNSRewrite
 
-additionalHostnames = {
-
+host_overrides = {
+    'unas': {
+        'names': [],
+        'addresses': ['192.168.0.110'],
+        'use_ts_addresses': False,
+    }
 }
 
 config = pulumi.Config('infra-tailscale-nextdns-rewrites')
@@ -31,8 +35,15 @@ def ts_nextdns_rewrites():
             # nextdns tag was matched. Machine needs a machine_name.domain_name -> IP A/AAAA record
             # machine_name = {name}.tailnet.ts.net
             machine_name = extractor(ts_device.name).domain
-            for name in [machine_name] + additionalHostnames.get(machine_name, []):
-                for address in ts_device.addresses:
+
+            # Get override info
+            host_override = host_overrides.get(machine_name, {})
+            names = [machine_name] + host_overrides.get('names', [])
+            addresses = host_overrides.get('addresses', []) + (
+                ts_device.addresses if host_override.get('use_ts_addresses', True) else [])
+
+            for name in names:
+                for address in addresses:
                     NextDNSRewrite(
                         name=f"{name}.{second_level_domain}",
                         content=address,
