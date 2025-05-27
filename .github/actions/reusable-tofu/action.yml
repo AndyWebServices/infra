@@ -70,7 +70,7 @@ runs:
           
           // 2. Prepare format of the comment
           const output = `### ${{ inputs.uniq-name }}
-          `#### OpenTofu Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          #### OpenTofu Format and Style 🖌\`${{ steps.fmt.outcome }}\`
           #### OpenTofu Initialization ⚙️\`${{ steps.init.outcome }}\`
           #### OpenTofu Validation 🤖\`${{ steps.validate.outcome }}\`
           <details><summary>Validation Output</summary>
