@@ -38,5 +38,6 @@ jobs:
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
         with:
+          uniq-name: "OpenTofu Cloudflare Zone AWS"
           working-directory: "cloudflare/zone_aws/"
           github-token: ${{ secrets.GITHUB_TOKEN }}

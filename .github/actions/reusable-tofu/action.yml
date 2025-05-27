@@ -1,6 +1,10 @@
 name: Resuable OpenTofu Workflow
 
 inputs:
+  uniq-name:
+    description: "A distinct name that doesn't match other names"
+    required: true
+    type: string
   working-directory:
     required: true
     type: string
@@ -61,11 +65,12 @@ runs:
             issue_number: context.issue.number,
           })
           const botComment = comments.find(comment => {
-            return comment.user.type === 'Bot' && comment.body.includes('OpenTofu Format and Style')
+            return comment.user.type === 'Bot' && comment.body.includes('${{ inputs.uniq-name }}')
           })
           
           // 2. Prepare format of the comment
-          const output = `#### OpenTofu Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+          const output = `### ${{ inputs.uniq-name }}
+          `#### OpenTofu Format and Style 🖌\`${{ steps.fmt.outcome }}\`
           #### OpenTofu Initialization ⚙️\`${{ steps.init.outcome }}\`
           #### OpenTofu Validation 🤖\`${{ steps.validate.outcome }}\`
           <details><summary>Validation Output</summary>

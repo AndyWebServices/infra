@@ -41,5 +41,6 @@ jobs:
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
         with:
+          uniq-name: "OpenTofu Tailscale Tailnet AWS"
           working-directory: "tailscale/aws_tailnet/"
           github-token: ${{ secrets.GITHUB_TOKEN }}
