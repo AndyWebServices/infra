@@ -1,4 +1,4 @@
-name: Deploy OpenTofu Cloudflare Zone AWS On PR
+name: Deploy OpenTofu Tailscale AWS Tailnet On PR
 
 on:
   push:
@@ -6,15 +6,18 @@ on:
       - main
   pull_request:
     paths:
-      - 'cloudflare/zone_aws/*.tf'
-      - 'cloudflare/zone_aws/*.tfvars'
-      - '.github/workflows/tofu-cloudflare-zone-aws.yml'
+      - 'tailscale/aws_tailnet/*.tf'
+      - 'tailscale/aws_tailnet/*.tfvars'
+      - '.github/workflows/tofu-tailscale-aws-tailnet.yml'
       - '.github/actions/reusable-tofu/action.yml'
 
 jobs:
   setup-env:
     name: Setup Environment
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'cloudflare/zone_aws'
     permissions:
       pull-requests: write
     steps:
@@ -30,14 +33,14 @@ jobs:
           AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
 
-          CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
-          TF_VAR_overlord_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overlord_ipv4
-          TF_VAR_authentik_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/authentik_ipv4
-          TF_VAR_overwatch_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overwatch_ipv4
+          TAILSCALE_API_KEY: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/key
+          TAILSCALE_TAILNET: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
+          TF_VAR_member_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/admin_user
+          TF_VAR_admin_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/member_user
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
         with:
-          uniq-name: "OpenTofu Cloudflare Zone AWS"
-          working-directory: "cloudflare/zone_aws/"
+          uniq-name: "OpenTofu Tailscale Tailnet AWS"
+          working-directory: "tailscale/aws_tailnet/"
           github-token: ${{ secrets.GITHUB_TOKEN }}
