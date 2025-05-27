@@ -69,7 +69,7 @@ resource "cloudflare_dns_record" "cname_records" {
   content = "${each.value.domain}.${var.domain}"
   type    = "CNAME"
   ttl     = 1
-  proxied = true
+  proxied = false # A names are proxied to hide IPs. CNAMEs point to proxied A records
   zone_id = var.zone_id
   comment = var.comment
 }
