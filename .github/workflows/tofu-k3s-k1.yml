@@ -1,4 +1,4 @@
-name: Deploy OpenTofu Tailscale AWS Tailnet On PR
+name: Deploy OpenTofu k3s-k1 On PR
 
 on:
   push:
