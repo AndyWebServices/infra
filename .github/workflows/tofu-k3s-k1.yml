@@ -1,0 +1,46 @@
+name: Deploy OpenTofu Tailscale AWS Tailnet On PR
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'k3s/k1/*.tf'
+      - 'k3s/k1/*.tfvars'
+      - '.github/workflows/tofu-k3s-k1.yml'
+      - '.github/actions/reusable-tofu/action.yml'
+
+jobs:
+  setup-env:
+    name: Setup Environment
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'k3s/k1'
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Load secrets
+        uses: 1password/load-secrets-action@v2
+        with:
+          # Export loaded secrets as environment variables
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
+          AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
+
+          TAILSCALE_API_KEY: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/key
+          TAILSCALE_TAILNET: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
+          TF_VAR_member_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/admin_user
+          TF_VAR_admin_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/member_user
+
+      - name: Run re-usable tofu
+        uses: ./.github/actions/reusable-tofu
+        with:
+          uniq-name: "OpenTofu Tailscale Tailnet AWS"
+          working-directory: 'k3s/k1'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
