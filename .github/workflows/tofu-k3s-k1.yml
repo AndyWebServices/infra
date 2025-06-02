@@ -33,10 +33,11 @@ jobs:
           AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
 
-          TAILSCALE_API_KEY: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/key
-          TAILSCALE_TAILNET: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
-          TF_VAR_member_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/admin_user
-          TF_VAR_admin_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/member_user
+          TF_VAR_tailscale_client_id: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client ID"
+          TF_VAR_tailscale_client_secret: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client Secret"
+          TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+          TF_VAR_longhorn_backup_cifs_username: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/username
+          TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/password
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
