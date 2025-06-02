@@ -2,9 +2,9 @@ terraform {
   backend "s3" {
     # access_key pulled from $AWS_ACCESS_KEY_ID
     # secret_access_key pulled from $AWS_SECRET_ACCESS_KEY
-    bucket = "gh-aws-infra"
-    key    = "k3s/k1/terraform.state"
-    region = "us-west-004"
+    bucket   = "gh-aws-infra"
+    key      = "k3s/k1/terraform.state"
+    region   = "us-west-004"
     endpoint = "s3.us-west-004.backblazeb2.com"
 
     # necessary settings to make s3 backend work with b2
@@ -27,7 +27,7 @@ terraform {
 }
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  config_path = "~/.kube/config"
 }
 
 provider "helm" {

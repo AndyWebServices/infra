@@ -10,7 +10,7 @@ resource "helm_release" "homepage" {
   namespace  = kubernetes_namespace.homepage.metadata[0].name
   chart      = "homepage"
   repository = "https://jameswynn.github.io/helm-charts"
-  values = [file("config/homepage/helm-values.yaml")]
+  values     = [file("config/homepage/helm-values.yaml")]
 
   depends_on = [kubernetes_namespace.homepage]
 }

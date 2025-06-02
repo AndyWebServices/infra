@@ -42,7 +42,7 @@ resource "kubernetes_manifest" "ha-dummy_service" {
           target_port = 8123
         }
       ]
-      clusterIP = "None"  # Headless service
+      clusterIP = "None" # Headless service
     }
   }
   depends_on = [kubernetes_namespace.ha-dummy]

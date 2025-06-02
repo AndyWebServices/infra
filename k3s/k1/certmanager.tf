@@ -10,7 +10,7 @@ resource "helm_release" "cert-manager" {
   namespace  = "cert-manager"
   chart      = "cert-manager"
   repository = "https://charts.jetstack.io"
-  values = [file("config/cert-manager/helm-values.yaml")]
+  values     = [file("config/cert-manager/helm-values.yaml")]
   set {
     name  = "crds.enabled"
     value = "true"

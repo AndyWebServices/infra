@@ -11,7 +11,7 @@ resource "helm_release" "longhorn" {
   namespace  = kubernetes_namespace.longhorn.metadata[0].name
   chart      = "longhorn"
   repository = "https://charts.longhorn.io"
-  values = [file("config/longhorn/helm-values.yaml")]
+  values     = [file("config/longhorn/helm-values.yaml")]
 
   depends_on = [kubernetes_namespace.longhorn]
 }

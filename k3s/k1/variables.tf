@@ -15,12 +15,12 @@ variable "cloudflare_api_token" {
 }
 
 variable "longhorn_backup_cifs_username" {
-  type = string
+  type        = string
   description = "Longhorn backup CIFS username"
 }
 
 variable "longhorn_backup_cifs_password" {
-  type = string
+  type        = string
   description = "Longhorn backup CIFS password"
 }
 
