@@ -2,7 +2,7 @@
 locals {
   dns_entries = {
     overlord = {
-      ipv4 = var.aws_chicago_ipv4
+      ipv4   = var.aws_chicago_ipv4
       cnames = ["", "actual", "ha", "homepage"]
     }
     authentik = {
