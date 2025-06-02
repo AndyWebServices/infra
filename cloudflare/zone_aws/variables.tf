@@ -1,7 +1,7 @@
 # variables.tf
-variable "overlord_ipv4" {
+variable "aws_chicago_ipv4" {
   type        = string
-  description = "ipv4 address of server overlord"
+  description = "ipv4 address of chicago HQ server"
 }
 
 variable "overlord_ipv6" {
