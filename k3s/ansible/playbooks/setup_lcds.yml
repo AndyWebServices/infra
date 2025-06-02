@@ -1,0 +1,22 @@
+---
+- name: Setup LCDs on k1 hosts
+  hosts: k1
+  become: false
+  vars:
+    repo_url: https://github.com/AndyWebServices/SKU_RM0004.git
+    repo_dir: "{{ ansible_env.HOME }}/SKU_RM0004"
+    repo_branch: main  # Replace with your desired branch name
+
+  tasks:
+    - name: Remove existing repo directory if it exists
+      file:
+        path: "{{ repo_dir }}"
+        state: absent
+
+    - name: Clone the SKU_RM0004 repository
+      git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_dir }}"
+        clone: yes
+        update: yes
+        version: "{{ repo_branch }}"

@@ -1,0 +1,21 @@
+ports:
+  web:
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
+  tailweb:
+    port: 9000
+    protocol: TCP
+
+  tailsecure:
+    port: 9443
+    protocol: TCP
+
+ingressRoute:
+  dashboard:
+    enabled: true
+    entryPoints: ["tailweb"]
+    matchRule: Host(`traefik-dashboard.andywebservices.com`)
+

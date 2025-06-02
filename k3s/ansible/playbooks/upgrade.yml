@@ -1,0 +1,13 @@
+---
+- name: Upgrade all packages on k1 hosts
+  hosts: k1
+  become: true
+  tasks:
+    - name: Update APT cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600  # Only update if the cache is older than 1 hour
+
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist  # Options: 'yes', 'safe', 'full', 'dist'
