@@ -14,6 +14,10 @@ resource "tailscale_acl" "as_json" {
         "tag:it" : ["autogroup:admin"],
         "tag:promiscuous" : ["autogroup:admin"],
         "tag:nextdns" : ["autogroup:admin"], // Sets up a name -> aws route in NextDNS
+
+        // Required for kubernetes tailscale integration
+        "tag:k8s-operator" : [],
+        "tag:k8s" : ["tag:k8s-operator"],
       },
 
       // Define access control lists for users, groups, autogroups, tags,
@@ -29,6 +33,8 @@ resource "tailscale_acl" "as_json" {
         { "action" : "accept", "src" : ["autogroup:member"], "dst" : ["autogroup:self:*", "autogroup:internet:*"], },
         // Accepts all incoming connections
         { "action" : "accept", "src" : ["*"], "dst" : ["tag:promiscuous:*"], },
+        { "action" : "accept", "src" : ["*"], "dst" : ["tag:k8s:*"], },
+        { "action" : "accept", "src" : ["tag:k8s"], "dst" : ["*:*"], },
       ],
 
       // Define users and devices that can use Tailscale SSH.

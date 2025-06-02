@@ -2,8 +2,8 @@
 locals {
   dns_entries = {
     overlord = {
-      ipv4   = var.overlord_ipv4
-      cnames = ["whoami", "actual", "ha"]
+      ipv4   = var.aws_chicago_ipv4
+      cnames = ["", "actual", "ha", "homepage"]
     }
     authentik = {
       ipv4   = var.authentik_ipv4
@@ -11,7 +11,7 @@ locals {
     }
     overwatch = {
       ipv4   = var.overwatch_ipv4
-      cnames = ["whoami.overwatch"]
+      cnames = ["whoami.overwatch", "status", "uptime"]
     }
   }
 }
@@ -23,7 +23,7 @@ locals {
     for triple in flatten([
       for domain, data in local.dns_entries : [
         for cname in data.cnames : {
-          key    = "${domain}-${cname}"
+          key    = "${cname}-${domain}"
           domain = domain
           cname  = cname
         }
@@ -65,7 +65,7 @@ resource "cloudflare_dns_record" "a_records" {
 resource "cloudflare_dns_record" "cname_records" {
   for_each = local.cname_map
 
-  name    = "${each.value.cname}.${var.domain}"
+  name    = "${each.value.cname != "" ? "${each.value.cname}." : ""}${var.domain}"
   content = "${each.value.domain}.${var.domain}"
   type    = "CNAME"
   ttl     = 1

@@ -1,4 +1,4 @@
-name: Deploy OpenTofu Cloudflare Zone AWS On PR
+name: Deploy OpenTofu k3s-k1 On PR
 
 on:
   push:
@@ -6,15 +6,18 @@ on:
       - main
   pull_request:
     paths:
-      - 'cloudflare/zone_aws/*.tf'
-      - 'cloudflare/zone_aws/*.tfvars'
-      - '.github/workflows/tofu-cloudflare-zone-aws.yml'
+      - 'k3s/k1/*.tf'
+      - 'k3s/k1/*.tfvars'
+      - '.github/workflows/tofu-k3s-k1.yml'
       - '.github/actions/reusable-tofu/action.yml'
 
 jobs:
   setup-env:
     name: Setup Environment
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'k3s/k1'
     permissions:
       pull-requests: write
     steps:
@@ -30,14 +33,15 @@ jobs:
           AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
 
-          CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
-          TF_VAR_aws_chicago_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/aws_chicago_ipv4
-          TF_VAR_authentik_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/authentik_ipv4
-          TF_VAR_overwatch_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overwatch_ipv4
+          TF_VAR_tailscale_client_id: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client ID"
+          TF_VAR_tailscale_client_secret: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client Secret"
+          TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+          TF_VAR_longhorn_backup_cifs_username: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/username
+          TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/password
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
         with:
-          uniq-name: "OpenTofu Cloudflare Zone AWS"
-          working-directory: "cloudflare/zone_aws/"
+          uniq-name: "OpenTofu Kubernetes(k3s) K1 Cluster"
+          working-directory: 'k3s/k1'
           github-token: ${{ secrets.GITHUB_TOKEN }}
