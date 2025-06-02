@@ -31,7 +31,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
 
           CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
-          TF_VAR_overlord_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overlord_ipv4
+          TF_VAR_aws_chicago_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/aws_chicago_ipv4
           TF_VAR_authentik_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/authentik_ipv4
           TF_VAR_overwatch_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overwatch_ipv4
 
