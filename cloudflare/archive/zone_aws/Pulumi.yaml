@@ -1,5 +1,0 @@
-name: infra-cf-zone-aws
-description: Cloudflare dns records for zone andywebservices.com
-runtime:
-  name: yaml
-
