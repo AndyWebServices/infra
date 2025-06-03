@@ -1,4 +1,14 @@
 # variables.tf
+variable "b2_access_key_id" {
+  type        = string
+  description = "B2 backend access key id"
+}
+
+variable "b2_secret_access_key" {
+  type        = string
+  description = "B2 backend secret access key"
+}
+
 variable "tailscale_client_id" {
   type        = string
   description = "Tailscale OAuth Client Id"
@@ -24,3 +34,17 @@ variable "longhorn_backup_cifs_password" {
   description = "Longhorn backup CIFS password"
 }
 
+variable "nextauth_secret" {
+  type        = string
+  description = "NextAuth Secret"
+}
+
+variable "meili_master_key" {
+  type        = string
+  description = "Meili Master Key"
+}
+
+variable "next_public_secret" {
+  type        = string
+  description = "Next Public Secret"
+}

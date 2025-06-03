@@ -1,4 +1,19 @@
 # variables.tf
+variable "b2_access_key_id" {
+  type        = string
+  description = "B2 backend access key id"
+}
+
+variable "b2_secret_access_key" {
+  type        = string
+  description = "B2 backend secret access key"
+}
+
+variable "cloudflare_api_token" {
+  type        = string
+  description = "Cloudflare API Token for editing zone dns"
+}
+
 variable "aws_chicago_ipv4" {
   type        = string
   description = "ipv4 address of chicago HQ server"

@@ -59,5 +59,5 @@ resource "kubernetes_manifest" "cloudflare_clusterissuer" {
       }
     }
   }
-  depends_on = [kubernetes_namespace.cert-manager, kubernetes_secret.cloudflare_api_token]
+  depends_on = [kubernetes_namespace.cert-manager, kubernetes_secret.cloudflare_api_token, helm_release.cert-manager]
 }

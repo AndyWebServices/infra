@@ -1,9 +1,9 @@
 # Configure ipv4, ipv6, and cname records here!!
 locals {
   dns_entries = {
-    overlord = {
+    k1 = {
       ipv4   = var.aws_chicago_ipv4
-      cnames = ["", "actual", "ha", "homepage"]
+      cnames = ["", "actual", "ha", "homepage", "karakeep"]
     }
     authentik = {
       ipv4   = var.authentik_ipv4
