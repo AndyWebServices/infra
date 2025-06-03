@@ -24,3 +24,17 @@ variable "longhorn_backup_cifs_password" {
   description = "Longhorn backup CIFS password"
 }
 
+variable "nextauth_secret" {
+  type        = string
+  description = "NextAuth Secret"
+}
+
+variable "meili_master_key" {
+  type        = string
+  description = "Meili Master Key"
+}
+
+variable "next_public_secret" {
+  type        = string
+  description = "Next Public Secret"
+}

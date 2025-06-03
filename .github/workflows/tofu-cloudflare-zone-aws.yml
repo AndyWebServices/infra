@@ -27,10 +27,14 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
-          AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
+          # B2 backend keys
+          TF_VAR_b2_access_key_id: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
+          TF_VAR_b2_secret_access_key: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
 
-          CLOUDFLARE_API_TOKEN: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+          # Cloudflare Token
+          TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+
+          # IP addresses
           TF_VAR_aws_chicago_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/aws_chicago_ipv4
           TF_VAR_authentik_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/authentik_ipv4
           TF_VAR_overwatch_ipv4: op://aws-svcs/ub5j7tuvg22mzrndyyqxfn3bpi/overwatch_ipv4

@@ -1,7 +1,8 @@
 terraform {
   backend "s3" {
-    # access_key pulled from $AWS_ACCESS_KEY_ID
-    # secret_access_key pulled from $AWS_SECRET_ACCESS_KEY
+    aws_access_key_id = var.b2_access_key_id
+    aws_secret_access_key = var.b2_secret_access_key
+
     bucket   = "gh-aws-infra"
     key      = "cloudlfare/zone_aws/terraform.state"
     region   = "us-west-004"
@@ -22,8 +23,8 @@ terraform {
   }
 }
 
-# api_token provided by $CLOUDFLARE_API_TOKEN
 provider "cloudflare" {
+  api_token = var.cloudflare_api_token
 }
 
 variable "zone_id" {

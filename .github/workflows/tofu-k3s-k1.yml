@@ -30,12 +30,15 @@ jobs:
           export-env: true
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          AWS_ACCESS_KEY_ID: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
-          AWS_SECRET_ACCESS_KEY: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
-
+          # B2 backend keys
+          TF_VAR_b2_access_key_id: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
+          TF_VAR_b2_secret_access_key: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
+          # Tailscale OAuth Client Keys
           TF_VAR_tailscale_client_id: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client ID"
           TF_VAR_tailscale_client_secret: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client Secret"
+          # Cloudflare API Token
           TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
+          # Longhorn CIFS username/password
           TF_VAR_longhorn_backup_cifs_username: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/username
           TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/password
 
