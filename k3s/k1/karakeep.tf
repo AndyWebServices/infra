@@ -88,7 +88,7 @@ resource "kubernetes_service" "web" {
 
   spec {
     selector = {
-      app              = "karakeep-web"
+      app = "karakeep-web"
     }
     load_balancer_ip = "192.168.0.61"
 
@@ -265,8 +265,8 @@ resource "kubernetes_deployment" "web" {
 
       spec {
         container {
-          name  = "web"
-          image = "ghcr.io/karakeep-app/karakeep:release"
+          name              = "web"
+          image             = "ghcr.io/karakeep-app/karakeep:release"
           image_pull_policy = "Always"
 
           env {
