@@ -360,7 +360,7 @@ resource "kubernetes_manifest" "karakeep_ingressroute" {
           kind  = "Rule"
           services = [
             {
-              name = "karakeep-web"
+              name = "web"
               port = 3000
             }
           ]
