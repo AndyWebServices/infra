@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
-    aws_access_key_id = var.b2_access_key_id
-    aws_secret_access_key = var.b2_secret_access_key
+    access_key = var.b2_access_key_id
+    secret_key = var.b2_secret_access_key
 
     bucket   = "gh-aws-infra"
     key      = "cloudlfare/zone_aws/terraform.state"

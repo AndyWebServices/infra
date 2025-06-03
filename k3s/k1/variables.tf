@@ -1,4 +1,14 @@
 # variables.tf
+variable "b2_access_key_id" {
+  type = string
+  description = "B2 backend access key id"
+}
+
+variable "b2_secret_access_key" {
+  type = string
+  description = "B2 backend secret access key"
+}
+
 variable "tailscale_client_id" {
   type        = string
   description = "Tailscale OAuth Client Id"
