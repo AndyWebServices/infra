@@ -5,13 +5,13 @@ locals {
       ipv4   = var.aws_chicago_ipv4
       cnames = ["", "actual", "ha", "homepage", "karakeep"]
     }
-    authentik = {
+    auth = {
       ipv4   = var.authentik_ipv4
-      cnames = ["lldap"]
+      cnames = ["authentik"]
     }
     overwatch = {
       ipv4   = var.overwatch_ipv4
-      cnames = ["whoami.overwatch", "status", "uptime"]
+      cnames = ["whoami.overwatch", "status", "uptime", "id", "lldap"]
     }
   }
 }

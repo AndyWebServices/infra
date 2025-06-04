@@ -9,6 +9,7 @@ services:
       - "[${PUBLIC_IPV6}]:80:80"
       - ${PUBLIC_IPV4}:443:443
       - "[${PUBLIC_IPV6}]:443:443"
+      # Dashboard, only on tailscale 8080 for security
       - ${TAILSCALE_IPV4}:8080:8080
       - "[${TAILSCALE_IPV6}]:8080:8080"
     volumes:
