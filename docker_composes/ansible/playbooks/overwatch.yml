@@ -17,4 +17,5 @@
     - secrets/overwatch-secret.yml
 
   roles:
-    - traefik
+    - pocket_id
+    - lldap

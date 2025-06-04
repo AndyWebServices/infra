@@ -1,2 +1,6 @@
 ---
 domain_name: "andywebservices.com"
+domain_no_tld: "andywebservices"
+domain_tld_only: "com"
+tz: "America/Chicago"
+

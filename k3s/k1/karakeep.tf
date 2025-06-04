@@ -284,6 +284,11 @@ resource "kubernetes_deployment" "web" {
             value = "/data"
           }
 
+          env {
+            name  = "DISABLE_SIGNUPS"
+            value = "true"
+          }
+
           env_from {
             secret_ref {
               name = kubernetes_secret.karakeep_secrets.metadata[0].name
