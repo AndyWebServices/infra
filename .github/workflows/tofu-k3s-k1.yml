@@ -61,6 +61,7 @@ jobs:
 
       - name: Set up Kubeconfig
         run: |
+          mkdir $HOME/.kube/
           echo "${{ env.KUBECONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
           chmod 600 $HOME/.kube/config
 
