@@ -15,9 +15,6 @@ jobs:
   setup-env:
     name: Setup Environment
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: 'cloudflare/zone_aws'
     permissions:
       pull-requests: write
     steps:
@@ -33,12 +30,9 @@ jobs:
           # B2 backend keys
           TF_VAR_b2_access_key_id: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           TF_VAR_b2_secret_access_key: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
-          # Tailscale OAuth keys
-          TF_VAR_tailscale_client_id: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/key
-          TF_VAR_tailscale_client_secret: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
-          # Tailscale admin/member user names
-          TF_VAR_member_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/admin_user
-          TF_VAR_admin_user: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/member_user
+          # Tailscale variables
+          TF_VAR_tailscale_api_key: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/api_key
+          TF_VAR_tailnet: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu

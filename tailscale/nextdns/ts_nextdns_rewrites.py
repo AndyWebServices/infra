@@ -11,6 +11,11 @@ host_overrides = {
         'names': [],
         'addresses': ['192.168.0.110'],
         'use_ts_addresses': False,
+    },
+    'traefik-traefik-ts': {
+        'names': ['longhorn'],
+        'addresses': [],
+        'use_ts_addresses': True,
     }
 }
 
@@ -38,7 +43,7 @@ def ts_nextdns_rewrites():
 
             # Get override info
             host_override = host_overrides.get(machine_name, {})
-            names = [machine_name] + host_overrides.get('names', [])
+            names = [machine_name] + host_override.get('names', [])
             addresses = host_overrides.get('addresses', []) + (
                 ts_device.addresses if host_override.get('use_ts_addresses', True) else [])
 

@@ -1,7 +1,8 @@
 terraform {
   backend "s3" {
-    # access_key pulled from $AWS_ACCESS_KEY_ID
-    # secret_access_key pulled from $AWS_SECRET_ACCESS_KEY
+    access_key = var.b2_access_key_id
+    secret_key = var.b2_secret_access_key
+
     bucket   = "gh-aws-infra"
     key      = "tailscale/aws_tailnet/terraform.state"
     region   = "us-west-004"
@@ -23,6 +24,6 @@ terraform {
 }
 
 provider "tailscale" {
-  # api_key set by $TAILSCALE_API_KEY
-  # tailnet set by $TAILSCALE_TAILNET
+  api_key = var.tailscale_api_key
+  tailnet = var.tailnet
 }
