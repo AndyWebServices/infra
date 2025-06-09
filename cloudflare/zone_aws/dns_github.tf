@@ -6,3 +6,12 @@ resource "cloudflare_dns_record" "txt_domain_verification_github_pages" {
   zone_id = var.zone_id
   comment = var.comment
 }
+
+resource "cloudflare_dns_record" "aws_docs_cname" {
+  name    = "docs.andywebservices.com"
+  type    = "CNAME"
+  ttl     = 1
+  content = "andywebservices.github.io"
+  zone_id = var.zone_id
+  comment = var.comment
+}
