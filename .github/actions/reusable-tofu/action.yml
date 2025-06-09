@@ -38,7 +38,7 @@ runs:
 
     - name: OpenTofu Plan
       id: plan
-      run: timeout 60s tofu plan -no-color
+      run: timeout 300s tofu plan -no-color
       shell: bash
       working-directory: "${{ inputs.working-directory }}"
       continue-on-error: true
