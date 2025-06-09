@@ -50,7 +50,7 @@ certificatesResolvers:
         # For some reason, some of my hosts fail to detect TXT record propagation in a timely manner. This is possibly
         # caused by NextDNS. My workaround is to have traefik wait 5min, and then call certbot without checking again
         propagation:
-          delayBeforeChecks: 300s
+          delayBeforeChecks: 30s
           disableChecks: true
         resolvers:
           - "1.1.1.1:53"

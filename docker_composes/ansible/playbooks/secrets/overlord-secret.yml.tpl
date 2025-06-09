@@ -1,5 +1,0 @@
-admin_email: "op://aws-svcs/k73bmmjiuedcssc36t4e3mdqfq/email"
-eab_kid: "op://aws-svcs/k73bmmjiuedcssc36t4e3mdqfq/EAB KID"
-eab_hmac_key: "op://aws-svcs/k73bmmjiuedcssc36t4e3mdqfq/EAB HMAC Key"
-cf_dns_api_token: "op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token"
-tailnet_url: "op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet"
