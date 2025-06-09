@@ -23,6 +23,6 @@ terraform {
 }
 
 provider "tailscale" {
-  # api_key set by $TAILSCALE_API_KEY
-  # tailnet set by $TAILSCALE_TAILNET
+  api_key = var.tailscale_api_key
+  tailnet = var.tailnet
 }
