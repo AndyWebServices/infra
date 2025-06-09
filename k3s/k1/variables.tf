@@ -48,3 +48,13 @@ variable "next_public_secret" {
   type        = string
   description = "Next Public Secret"
 }
+
+variable "openwebui_oauth_client_id" {
+  type    = string
+  default = "OpenWebUI OAuth Client ID"
+}
+
+variable "openwebui_oauth_client_secret" {
+  type    = string
+  default = "OpenWebUI OAuth Client Secret"
+}

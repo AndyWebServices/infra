@@ -34,13 +34,26 @@ jobs:
           TF_VAR_b2_access_key_id: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           TF_VAR_b2_secret_access_key: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
           # Tailscale OAuth Client Keys
-          TF_VAR_tailscale_client_id: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client ID"
-          TF_VAR_tailscale_client_secret: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client Secret"
+          TF_VAR_tailscale_client_id: op://aws-svcs/knwzgjajqmorvfhvlyjpve5zle/clientId
+          TF_VAR_tailscale_client_secret: op://aws-svcs/knwzgjajqmorvfhvlyjpve5zle/clientSecret
           # Cloudflare API Token
           TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
           # Longhorn CIFS username/password
           TF_VAR_longhorn_backup_cifs_username: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/username
           TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/password
+          # OpenWebUI OAuth Client Keys
+          TF_VAR_openwebui_oauth_client_id: op://aws-svcs/ejsv7ucfzu4q5bzmhfxabf3ujq/clientId
+          TF_VAR_openwebui_oauth_client_secret: op://aws-svcs/ejsv7ucfzu4q5bzmhfxabf3ujq/clientSecret
+          # Tailscale GHA OAuth Client
+          TS_OAUTH_CLIENT_ID: op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/clientId
+          TS_OAUTH_SECRET: op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/clientSecret
+
+      - name: Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ env.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ env.TS_OAUTH_SECRET }}
+          tags: tag:gha
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu

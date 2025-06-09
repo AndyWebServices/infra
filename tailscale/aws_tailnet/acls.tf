@@ -16,6 +16,9 @@ resource "tailscale_acl" "as_json" {
         "tag:promiscuous" : ["autogroup:admin"],
         "tag:nextdns" : ["autogroup:admin"], // Sets up a name -> aws route in NextDNS
 
+        // Required for tagging ephemeral access from GHA
+        "tag:gha" : ["autogroup:admin"],
+
         // Required for kubernetes tailscale integration
         "tag:k8s-operator" : [],
         "tag:k8s" : ["tag:k8s-operator"],

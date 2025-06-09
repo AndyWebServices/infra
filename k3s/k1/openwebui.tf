@@ -38,8 +38,8 @@ resource "helm_release" "openwebui" {
         enableSignup = true
         oidc = {
           enabled      = true
-          clientId     = "48b76910-0a02-446f-b016-23d8ef2830be"
-          clientSecret = "VWxkQsbg0gF1XOyGbSY5Z4xR4HW9VEVW"
+          clientId     = var.openwebui_oauth_client_id
+          clientSecret = var.openwebui_oauth_client_secret
           providerName = "Pocket ID"
           providerUrl  = "https://id.andywebservices.com/.well-known/openid-configuration"
         }
