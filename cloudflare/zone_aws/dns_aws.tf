@@ -3,7 +3,7 @@ locals {
   dns_entries = {
     k1 = {
       ipv4   = var.aws_chicago_ipv4
-      cnames = ["", "actual", "ha", "homepage", "karakeep"]
+      cnames = ["", "actual", "ha", "homepage", "karakeep", "a1"]
     }
     auth = {
       ipv4   = var.authentik_ipv4
