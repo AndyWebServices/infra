@@ -290,17 +290,17 @@ resource "kubernetes_deployment" "web" {
           }
 
           env {
-            name = "OLLAMA_BASE_URL"
+            name  = "OLLAMA_BASE_URL"
             value = "http://192.168.0.44:11434"
           }
 
           env {
-            name = "INFERENCE_TEXT_MODEL"
+            name  = "INFERENCE_TEXT_MODEL"
             value = "mistral"
           }
 
           env {
-            name = "INFERENCE_IMAGE_MODEL"
+            name  = "INFERENCE_IMAGE_MODEL"
             value = "llava"
           }
 

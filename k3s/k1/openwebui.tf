@@ -17,7 +17,7 @@ resource "helm_release" "openwebui" {
       ingress = {
         enabled = true
         annotations = {
-          "kubernetes.io/ingress.class" = "traefik" # Make sure Traefik sees this
+          "kubernetes.io/ingress.class"              = "traefik" # Make sure Traefik sees this
           "cert-manager.io/cluster-issuer"           = kubernetes_manifest.cloudflare_clusterissuer.manifest.metadata.name
           "traefik.ingress.kubernetes.io/router.tls" = "true"
         }
