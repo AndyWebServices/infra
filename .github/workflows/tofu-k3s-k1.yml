@@ -41,7 +41,11 @@ jobs:
           TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
           # Longhorn CIFS username/password
           TF_VAR_longhorn_backup_cifs_username: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/username
-          TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/password
+          TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/passwordBase64
+          # Karakeep secrets
+          TF_VAR_nextauth_secret: op://aws-svcs/476ar3syqpv3ic47ebooekbr5m/nextauthSecret
+          TF_VAR_meili_master_key: op://aws-svcs/476ar3syqpv3ic47ebooekbr5m/meiliMasterKey
+          TF_VAR_next_public_secret: op://aws-svcs/476ar3syqpv3ic47ebooekbr5m/nextPublicSecret
           # OpenWebUI OAuth Client Keys
           TF_VAR_openwebui_oauth_client_id: op://aws-svcs/ejsv7ucfzu4q5bzmhfxabf3ujq/clientId
           TF_VAR_openwebui_oauth_client_secret: op://aws-svcs/ejsv7ucfzu4q5bzmhfxabf3ujq/clientSecret
