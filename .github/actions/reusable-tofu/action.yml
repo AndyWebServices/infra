@@ -43,12 +43,12 @@ runs:
       working-directory: "${{ inputs.working-directory }}"
       continue-on-error: true
 
-#    - name: OpenTofu Apply On Push
-#      if: github.event_name == 'push'
-#      id: apply
-#      run: timeout 60s tofu apply -no-color
-#      shell: bash
-#      working-directory: "${{ inputs.working-directory }}"
+    - name: OpenTofu Apply On Push
+      if: github.event_name == 'push'
+      id: apply
+      run: timeout 300s tofu apply -no-color
+      shell: bash
+      working-directory: "${{ inputs.working-directory }}"
 
     - uses: actions/github-script@v6
       continue-on-error: true
