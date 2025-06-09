@@ -47,6 +47,8 @@ jobs:
           # Tailscale GHA OAuth Client
           TS_OAUTH_CLIENT_ID: op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/clientId
           TS_OAUTH_SECRET: op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/clientSecret
+          # Kubeconfig for K1 cluster
+          KUBECONFIG_DATA: op://aws-svcs/w5mivf4m66fanyifabnzsobjje/credential
 
       - name: Tailscale
         uses: tailscale/github-action@v3
@@ -54,6 +56,19 @@ jobs:
           oauth-client-id: ${{ env.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ env.TS_OAUTH_SECRET }}
           tags: tag:gha
+          version: latest
+          use-cache: 'true'
+
+      - name: Set up Kubeconfig
+        run: |
+          echo "${{ env.KUBECONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Test kubectl
+        run: kubectl get nodes
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
