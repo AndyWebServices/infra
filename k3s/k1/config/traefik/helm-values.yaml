@@ -18,4 +18,3 @@ ingressRoute:
     enabled: true
     entryPoints: ["tailweb"]
     matchRule: Host(`traefik-dashboard.andywebservices.com`)
-

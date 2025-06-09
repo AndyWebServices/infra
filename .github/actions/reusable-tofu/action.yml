@@ -38,7 +38,7 @@ runs:
 
     - name: OpenTofu Plan
       id: plan
-      run: timeout 300s tofu plan -no-color
+      run: tofu plan -no-color
       shell: bash
       working-directory: "${{ inputs.working-directory }}"
       continue-on-error: true
@@ -46,7 +46,7 @@ runs:
     - name: OpenTofu Apply On Push
       if: github.event_name == 'push'
       id: apply
-      run: timeout 300s tofu apply -no-color
+      run: tofu apply -no-color -auto-approve
       shell: bash
       working-directory: "${{ inputs.working-directory }}"
 

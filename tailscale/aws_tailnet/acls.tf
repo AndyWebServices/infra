@@ -1,6 +1,6 @@
 resource "tailscale_acl" "as_json" {
   overwrite_existing_content = true
-  acl = jsonencode( // Example/default ACLs for unrestricted connections.
+  acl = jsonencode(// Example/default ACLs for unrestricted connections.
     {
       // Declare static groups of users. Use autogroups for all users or users with a specific role.
       // "groups": {
@@ -10,11 +10,14 @@ resource "tailscale_acl" "as_json" {
       // Define the tags which can be applied to devices and by which users.
       "tagOwners" : {
         "tag:ssh" : ["autogroup:admin"],
-        "tag:server" : ["autogroup:admin"],  // Allows all :53, :67, :8888
+        "tag:server" : ["autogroup:admin"], // Allows all :53, :67, :8888
         "tag:webhost" : ["autogroup:admin"], // Allows all :80, :443
         "tag:it" : ["autogroup:admin"],
         "tag:promiscuous" : ["autogroup:admin"],
         "tag:nextdns" : ["autogroup:admin"], // Sets up a name -> aws route in NextDNS
+
+        // Required for tagging ephemeral access from GHA
+        "tag:gha" : ["autogroup:admin"],
 
         // Required for kubernetes tailscale integration
         "tag:k8s-operator" : [],
@@ -43,8 +46,11 @@ resource "tailscale_acl" "as_json" {
         { "src" : ["*"], "dst" : ["192.168.0.110"], "ip" : ["*"] },
         // Accepts all incoming connections
         { "src" : ["*"], "dst" : ["tag:promiscuous"], "ip" : ["*"] },
+        // Anyone can talk to k8s, and vice versa
         { "src" : ["*"], "dst" : ["tag:k8s"], "ip" : ["*"] },
         { "src" : ["tag:k8s"], "dst" : ["*"], "ip" : ["*"] },
+        // GHA should be able to reach k8s-operator, k8s, and broader internet
+        { "src" : ["tag:gha"], "dst" : ["tag:k8s-operator", "tag:k8s", "autogroup:internet", "192.168.0.0/24"], "ip" : ["*"] }
       ],
 
       // Define postures that will be applied to all rules without any specific
@@ -97,5 +103,5 @@ resource "tailscale_acl" "as_json" {
         { "target" : ["100.75.39.82"], "attr" : ["mullvad"] },
         { "target" : ["100.68.126.56"], "attr" : ["mullvad"] },
       ],
-  })
+    })
 }

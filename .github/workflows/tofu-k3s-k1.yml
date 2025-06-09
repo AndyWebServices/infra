@@ -15,6 +15,7 @@ jobs:
   setup-env:
     name: Setup Environment
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     defaults:
       run:
         working-directory: 'k3s/k1'
@@ -34,13 +35,49 @@ jobs:
           TF_VAR_b2_access_key_id: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/keyID
           TF_VAR_b2_secret_access_key: op://aws-svcs/hctngt5ggvrvmx4nt56v3c7b6q/applicationKey
           # Tailscale OAuth Client Keys
-          TF_VAR_tailscale_client_id: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client ID"
-          TF_VAR_tailscale_client_secret: "op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/Client Secret"
+          TF_VAR_tailscale_client_id: op://aws-svcs/knwzgjajqmorvfhvlyjpve5zle/clientId
+          TF_VAR_tailscale_client_secret: op://aws-svcs/knwzgjajqmorvfhvlyjpve5zle/clientSecret
           # Cloudflare API Token
           TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
           # Longhorn CIFS username/password
           TF_VAR_longhorn_backup_cifs_username: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/username
-          TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/password
+          TF_VAR_longhorn_backup_cifs_password: op://aws-svcs/vwinxzfaddhrv7boqxmt5ydz2y/passwordBase64
+          # Karakeep secrets
+          TF_VAR_nextauth_secret: op://aws-svcs/476ar3syqpv3ic47ebooekbr5m/nextauthSecret
+          TF_VAR_meili_master_key: op://aws-svcs/476ar3syqpv3ic47ebooekbr5m/meiliMasterKey
+          TF_VAR_next_public_secret: op://aws-svcs/476ar3syqpv3ic47ebooekbr5m/nextPublicSecret
+          # OpenWebUI OAuth Client Keys
+          TF_VAR_openwebui_oauth_client_id: op://aws-svcs/ejsv7ucfzu4q5bzmhfxabf3ujq/clientId
+          TF_VAR_openwebui_oauth_client_secret: op://aws-svcs/ejsv7ucfzu4q5bzmhfxabf3ujq/clientSecret
+          # Tailscale GHA OAuth Client
+          TS_OAUTH_CLIENT_ID: op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/clientId
+          TS_OAUTH_SECRET: op://aws-svcs/grw65fzqcu3ip7bvu53c7issw4/clientSecret
+          # Kubeconfig for K1 cluster
+          KUBECONFIG_DATA: op://aws-svcs/w5mivf4m66fanyifabnzsobjje/credential
+
+      - name: Tailscale
+        uses: tailscale/github-action@v3
+        with:
+          oauth-client-id: ${{ env.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ env.TS_OAUTH_SECRET }}
+          tags: tag:gha
+          version: latest
+          use-cache: 'true'
+
+      - name: Set up Kubeconfig
+        run: |
+          mkdir $HOME/.kube/
+          echo "${{ env.KUBECONFIG_DATA }}" | base64 --decode > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v4
+
+      - name: Install helm
+        uses: azure/setup-helm@v4.3.0
+
+      - name: Test kubectl
+        run: kubectl get nodes
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu

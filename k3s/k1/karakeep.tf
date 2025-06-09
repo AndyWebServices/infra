@@ -289,6 +289,21 @@ resource "kubernetes_deployment" "web" {
             value = "true"
           }
 
+          env {
+            name  = "OLLAMA_BASE_URL"
+            value = "http://192.168.0.44:11434"
+          }
+
+          env {
+            name  = "INFERENCE_TEXT_MODEL"
+            value = "mistral"
+          }
+
+          env {
+            name  = "INFERENCE_IMAGE_MODEL"
+            value = "llava"
+          }
+
           env_from {
             secret_ref {
               name = kubernetes_secret.karakeep_secrets.metadata[0].name
@@ -372,8 +387,7 @@ resource "kubernetes_manifest" "karakeep_ingressroute" {
     }
   }
   depends_on = [
-    helm_release.traefik,
-    kubernetes_service.traefik_ts
+    helm_release.traefik
   ]
 }
 

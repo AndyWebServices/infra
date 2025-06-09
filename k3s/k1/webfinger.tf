@@ -135,8 +135,7 @@ resource "kubernetes_manifest" "webfinger_ingressroute" {
     }
   }
   depends_on = [
-    helm_release.traefik,
-    kubernetes_service.traefik_ts
+    helm_release.traefik
   ]
 }
 

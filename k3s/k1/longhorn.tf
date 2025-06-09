@@ -68,7 +68,6 @@ resource "kubernetes_manifest" "longhorn_ingressroute" {
   depends_on = [
     kubernetes_namespace.longhorn,
     helm_release.longhorn,
-    kubernetes_service.traefik_ts
   ]
 }
 
