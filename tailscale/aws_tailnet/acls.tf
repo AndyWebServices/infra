@@ -1,6 +1,6 @@
 resource "tailscale_acl" "as_json" {
   overwrite_existing_content = true
-  acl = jsonencode(// Example/default ACLs for unrestricted connections.
+  acl = jsonencode( // Example/default ACLs for unrestricted connections.
     {
       // Declare static groups of users. Use autogroups for all users or users with a specific role.
       // "groups": {
@@ -10,7 +10,7 @@ resource "tailscale_acl" "as_json" {
       // Define the tags which can be applied to devices and by which users.
       "tagOwners" : {
         "tag:ssh" : ["autogroup:admin"],
-        "tag:server" : ["autogroup:admin"], // Allows all :53, :67, :8888
+        "tag:server" : ["autogroup:admin"],  // Allows all :53, :67, :8888
         "tag:webhost" : ["autogroup:admin"], // Allows all :80, :443
         "tag:it" : ["autogroup:admin"],
         "tag:promiscuous" : ["autogroup:admin"],
@@ -33,7 +33,7 @@ resource "tailscale_acl" "as_json" {
         // {"src": ["group:example"], "dst": ["tag:example"], "ip": ["*"], "srcPosture":["posture:autoUpdateMac"]},
 
         // Allow all connections for admins
-        { "src" : ["autogroup:admin"], "dst" : ["*"], "ip": ["*"] },
+        { "src" : ["autogroup:admin"], "dst" : ["*"], "ip" : ["*"] },
         // Anyone can access webhost 80, 443
         { "src" : ["*"], "dst" : ["tag:webhost"], "ip" : ["80", "443"] },
         // IT infrastructure can contact any device and any port. Use this tag for critical IT
@@ -97,5 +97,5 @@ resource "tailscale_acl" "as_json" {
         { "target" : ["100.75.39.82"], "attr" : ["mullvad"] },
         { "target" : ["100.68.126.56"], "attr" : ["mullvad"] },
       ],
-    })
+  })
 }
