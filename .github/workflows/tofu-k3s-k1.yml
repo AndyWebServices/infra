@@ -69,6 +69,9 @@ jobs:
       - name: Install kubectl
         uses: azure/setup-kubectl@v4
 
+      - name: Install helm
+        uses: azure/setup-helm@v4.3.0
+
       - name: Test kubectl
         run: kubectl get nodes
 
