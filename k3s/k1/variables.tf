@@ -19,6 +19,11 @@ variable "tailscale_client_secret" {
   description = "Tailscale OAuth Client Secret"
 }
 
+variable "tailscale_tailnet" {
+  type        = string
+  description = "Name of tailnet, e.g. `some-name.ts.net`"
+}
+
 variable "cloudflare_api_token" {
   type        = string
   description = "Cloudflare API Token"

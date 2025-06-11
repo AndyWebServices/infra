@@ -8,8 +8,11 @@ resource "kubernetes_persistent_volume_claim" "webfinger_pvc" {
   metadata {
     name      = "webfinger-pvc"
     namespace = kubernetes_namespace.webfinger.metadata[0].name
+    labels = {
+      "recurring-job-group.longhorn.io/default" = "enabled"
+      "recurring-job.longhorn.io/c-riro8k"      = "enabled"
+    }
   }
-
   spec {
     access_modes = ["ReadWriteOnce"]
 
@@ -26,25 +29,20 @@ resource "kubernetes_deployment" "webfinger" {
   metadata {
     name      = "webfinger"
     namespace = kubernetes_namespace.webfinger.metadata[0].name
-
   }
-
   spec {
     replicas = 1
-
     selector {
       match_labels = {
         app = "webfinger"
       }
     }
-
     template {
       metadata {
         labels = {
           app = "webfinger"
         }
       }
-
       spec {
         container {
           name  = "webfinger"
@@ -57,7 +55,6 @@ resource "kubernetes_deployment" "webfinger" {
         }
         volume {
           name = "webfinger-html"
-
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.webfinger_pvc.metadata[0].name
           }
@@ -72,7 +69,6 @@ resource "kubernetes_service" "webfinger" {
     name      = "webfinger"
     namespace = kubernetes_namespace.webfinger.metadata[0].name
   }
-
   spec {
     selector = {
       app = "webfinger"

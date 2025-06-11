@@ -37,6 +37,7 @@ jobs:
           # Tailscale OAuth Client Keys
           TF_VAR_tailscale_client_id: op://aws-svcs/knwzgjajqmorvfhvlyjpve5zle/clientId
           TF_VAR_tailscale_client_secret: op://aws-svcs/knwzgjajqmorvfhvlyjpve5zle/clientSecret
+          TF_VAR_tailnet: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
           # Cloudflare API Token
           TF_VAR_cloudflare_api_token: op://aws-svcs/ozxn4ucjnnymr3bnbs6oonpmke/token
           # Longhorn CIFS username/password
