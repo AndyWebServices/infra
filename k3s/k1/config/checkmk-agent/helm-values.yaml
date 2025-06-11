@@ -1,0 +1,36 @@
+ingress:
+  enabled: true
+  className: ""
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: checkmk-agent.andywebservices.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName = "checkmk-agent-certificate-secret"
+
+tlsCommunication:
+  enabled: false
+  verifySsl: false
+
+## Configuration for cluster-collector
+clusterCollector:
+  image:
+    repository: andrewmzhang/kubernetes-collector
+    pullPolicy: Always
+
+nodeCollector:
+  cadvisor:
+    image:
+      repository: andrewmzhang/cadvisor-patched
+      pullPolicy: Always
+  containerMetricsCollector:
+    image:
+      repository: andrewmzhang/kubernetes-collector
+      pullPolicy: Always
+  machineSectionsCollector:
+    image:
+      repository: andrewmzhang/kubernetes-collector
+      pullPolicy: Always

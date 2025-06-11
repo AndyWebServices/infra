@@ -8,6 +8,10 @@ resource "kubernetes_persistent_volume_claim" "actual" {
   metadata {
     name      = "actual-data-pvc"
     namespace = kubernetes_namespace.actual.metadata[0].name
+    labels = {
+      "recurring-job-group.longhorn.io/default" = "enabled"
+      "recurring-job.longhorn.io/c-svue5v"      = "enabled"
+    }
   }
   spec {
     access_modes = ["ReadWriteOnce"]

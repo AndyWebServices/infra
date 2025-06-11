@@ -106,6 +106,10 @@ resource "kubernetes_persistent_volume_claim" "data_pvc" {
   metadata {
     name      = "data-pvc"
     namespace = kubernetes_namespace.karakeep.metadata[0].name
+    labels = {
+      "recurring-job-group.longhorn.io/default" = "enabled"
+      "recurring-job.longhorn.io/c-a0ip13"      = "enabled"
+    }
   }
 
   spec {
@@ -123,11 +127,13 @@ resource "kubernetes_persistent_volume_claim" "meilisearch_pvc" {
   metadata {
     name      = "meilisearch-pvc"
     namespace = kubernetes_namespace.karakeep.metadata[0].name
+    labels = {
+      "recurring-job-group.longhorn.io/default" = "enabled"
+      "recurring-job.longhorn.io/c-gz3vw1"      = "enabled"
+    }
   }
-
   spec {
     access_modes = ["ReadWriteOnce"]
-
     resources {
       requests = {
         storage = "1Gi"
@@ -141,28 +147,23 @@ resource "kubernetes_deployment" "chrome" {
     name      = "chrome"
     namespace = kubernetes_namespace.karakeep.metadata[0].name
   }
-
   spec {
     replicas = 1
-
     selector {
       match_labels = {
         app = "chrome"
       }
     }
-
     template {
       metadata {
         labels = {
           app = "chrome"
         }
       }
-
       spec {
         container {
           name  = "chrome"
           image = "gcr.io/zenika-hub/alpine-chrome:123"
-
           command = [
             "chromium-browser",
             "--headless",
@@ -184,54 +185,44 @@ resource "kubernetes_deployment" "meilisearch" {
     name      = "meilisearch"
     namespace = kubernetes_namespace.karakeep.metadata[0].name
   }
-
   spec {
     replicas = 1
-
     selector {
       match_labels = {
         app = "meilisearch"
       }
     }
-
     template {
       metadata {
         labels = {
           app = "meilisearch"
         }
       }
-
       spec {
         container {
           name  = "meilisearch"
           image = "getmeili/meilisearch:v1.11.1"
-
           env {
             name  = "MEILI_NO_ANALYTICS"
             value = "true"
           }
-
           env_from {
             secret_ref {
               name = kubernetes_secret.karakeep_secrets.metadata[0].name
             }
           }
-
           env_from {
             config_map_ref {
               name = kubernetes_config_map.karakeep_configuration.metadata[0].name
             }
           }
-
           volume_mount {
             name       = "meilisearch"
             mount_path = "/meili_data"
           }
         }
-
         volume {
           name = "meilisearch"
-
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.meilisearch_pvc.metadata[0].name
           }
@@ -246,23 +237,19 @@ resource "kubernetes_deployment" "web" {
     name      = "web"
     namespace = kubernetes_namespace.karakeep.metadata[0].name
   }
-
   spec {
     replicas = 1
-
     selector {
       match_labels = {
         app = "karakeep-web"
       }
     }
-
     template {
       metadata {
         labels = {
           app = "karakeep-web"
         }
       }
-
       spec {
         container {
           name              = "web"
