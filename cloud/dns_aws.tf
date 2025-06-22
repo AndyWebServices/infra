@@ -1,9 +1,9 @@
 # Configure ipv4, ipv6, and cname records here!!
 locals {
   dns_entries = {
-    k1 = {
-      ipv4   = var.aws_chicago_ipv4
-      cnames = ["", "actual", "ha", "homepage", "karakeep", "a1"]
+    k1-ingress = {
+      ipv4   = var.cf_aws_chicago_ipv4
+      cnames = ["", "actual", "ha", "homepage", "karakeep", "a1", "checkmk", "chat"]
     }
     auth = {
       ipv4   = var.authentik_ipv4
@@ -11,7 +11,7 @@ locals {
     }
     overwatch = {
       ipv4   = var.overwatch_ipv4
-      cnames = ["whoami.overwatch", "status", "uptime", "id", "lldap"]
+      cnames = ["whoami.overwatch", "status", "uptime", "id", "lldap", "hub"]
     }
   }
 }
@@ -39,13 +39,13 @@ locals {
 resource "cloudflare_dns_record" "a_records" {
   for_each = local.dns_entries
 
-  name    = "${each.key}.${var.domain}"
+  name    = "${each.key}.${var.cf_domain}"
   content = each.value.ipv4
   proxied = true
   ttl     = 1
-  zone_id = var.zone_id
+  zone_id = var.cf_zone_id
   type    = "A"
-  comment = var.comment
+  comment = var.cf_comment
 }
 
 # Create all AAAA records
@@ -65,21 +65,21 @@ resource "cloudflare_dns_record" "a_records" {
 resource "cloudflare_dns_record" "cname_records" {
   for_each = local.cname_map
 
-  name    = "${each.value.cname != "" ? "${each.value.cname}." : ""}${var.domain}"
-  content = "${each.value.domain}.${var.domain}"
+  name    = "${each.value.cname != "" ? "${each.value.cname}." : ""}${var.cf_domain}"
+  content = "${each.value.domain}.${var.cf_domain}"
   type    = "CNAME"
   ttl     = 1
   proxied = false # A names are proxied to hide IPs. CNAMEs point to proxied A records
-  zone_id = var.zone_id
-  comment = var.comment
+  zone_id = var.cf_zone_id
+  comment = var.cf_comment
 }
 
 # Create misc TXT record
 resource "cloudflare_dns_record" "txt_kerberos" {
-  name    = "_kerberos.${var.domain}"
+  name    = "_kerberos.${var.cf_domain}"
   type    = "TXT"
   ttl     = 1
   content = "ANDYWEBSERVICES.COM"
-  zone_id = var.zone_id
-  comment = var.comment
+  zone_id = var.cf_zone_id
+  comment = var.cf_comment
 }

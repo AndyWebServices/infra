@@ -4,7 +4,7 @@ terraform {
     secret_key = var.b2_secret_access_key
 
     bucket   = "gh-aws-infra"
-    key      = "cloudlfare/zone_aws/terraform.state"
+    key      = "cloud/terraform.state"
     region   = "us-west-004"
     endpoint = "s3.us-west-004.backblazeb2.com"
 
@@ -20,25 +20,23 @@ terraform {
       source  = "cloudflare/cloudflare"
       version = "~> 5"
     }
+    oci = {
+      source  = "oracle/oci"
+      version = "7.5.0"
+    }
   }
 }
 
+# Cloudflare Provider Settings and Variables
 provider "cloudflare" {
-  api_token = var.cloudflare_api_token
+  api_token = var.cf_api_token
 }
 
-variable "zone_id" {
-  default = "6dfb9abb8a292cebb7a9be4944886e29"
-}
-
-variable "account_id" {
-  default = "aad57bf06f66f299d32f1323117f8a19"
-}
-
-variable "domain" {
-  default = "andywebservices.com"
-}
-
-variable "comment" {
-  default = "MANAGED BY gh-aws-infra/cloudflare/zone_aws DO NOT EDIT!!"
+# Oracle Cloud Infra
+provider "oci" {
+  tenancy_ocid = var.oci_tenancy_ocid
+  user_ocid    = var.oci_user_ocid
+  fingerprint  = var.oci_fingerprint
+  private_key  = var.oci_private_key
+  region       = var.oci_region
 }
