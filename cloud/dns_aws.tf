@@ -2,15 +2,15 @@
 locals {
   dns_entries = {
     k1-ingress = {
-      ipv4 = var.cf_aws_chicago_ipv4
+      ipv4   = var.cf_aws_chicago_ipv4
       cnames = ["", "actual", "ha", "homepage", "karakeep", "a1", "checkmk", "chat"]
     }
     auth = {
-      ipv4 = var.authentik_ipv4
+      ipv4   = var.authentik_ipv4
       cnames = ["authentik"]
     }
     overwatch = {
-      ipv4 = var.overwatch_ipv4
+      ipv4   = var.overwatch_ipv4
       cnames = ["whoami.overwatch", "status", "uptime", "id", "lldap", "hub"]
     }
   }
@@ -28,7 +28,7 @@ locals {
           cname  = cname
         }
       ]
-    ]) : triple.key => {
+      ]) : triple.key => {
       domain = triple.domain
       cname  = triple.cname
     }

@@ -3,9 +3,9 @@ terraform {
     access_key = var.b2_access_key_id
     secret_key = var.b2_secret_access_key
 
-    bucket = "gh-aws-infra"
-    key    = "cloud/terraform.state"
-    region = "us-west-004"
+    bucket   = "gh-aws-infra"
+    key      = "cloud/terraform.state"
+    region   = "us-west-004"
     endpoint = "s3.us-west-004.backblazeb2.com"
 
     # necessary settings to make s3 backend work with b2
