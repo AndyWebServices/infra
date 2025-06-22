@@ -13,7 +13,7 @@ host_overrides = {
         'use_ts_addresses': False,
     },
     'traefik-traefik-ts': {
-        'names': ['longhorn'],
+        'names': ['longhorn', 'traefik-dashboard'],
         'addresses': [],
         'use_ts_addresses': True,
     }

@@ -3,9 +3,9 @@ terraform {
     access_key = var.b2_access_key_id
     secret_key = var.b2_secret_access_key
 
-    bucket   = "gh-aws-infra"
-    key      = "cloud/terraform.state"
-    region   = "us-west-004"
+    bucket = "gh-aws-infra"
+    key    = "cloud/terraform.state"
+    region = "us-west-004"
     endpoint = "s3.us-west-004.backblazeb2.com"
 
     # necessary settings to make s3 backend work with b2
@@ -24,6 +24,10 @@ terraform {
       source  = "oracle/oci"
       version = "7.5.0"
     }
+    tailscale = {
+      source  = "tailscale/tailscale"
+      version = "0.20.0"
+    }
   }
 }
 
@@ -39,4 +43,10 @@ provider "oci" {
   fingerprint  = var.oci_fingerprint
   private_key  = var.oci_private_key
   region       = var.oci_region
+}
+
+# Tailscale
+provider "tailscale" {
+  api_key = var.tailscale_api_key
+  tailnet = var.tailnet
 }
