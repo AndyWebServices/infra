@@ -24,6 +24,10 @@ terraform {
       source  = "oracle/oci"
       version = "7.5.0"
     }
+    tailscale = {
+      source  = "tailscale/tailscale"
+      version = "0.20.0"
+    }
   }
 }
 
@@ -39,4 +43,10 @@ provider "oci" {
   fingerprint  = var.oci_fingerprint
   private_key  = var.oci_private_key
   region       = var.oci_region
+}
+
+# Tailscale
+provider "tailscale" {
+  api_key = var.tailscale_api_key
+  tailnet = var.tailnet
 }

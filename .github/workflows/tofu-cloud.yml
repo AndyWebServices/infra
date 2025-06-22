@@ -42,6 +42,9 @@ jobs:
           TF_VAR_oci_private_key: "op://aws-svcs/kcv64xrfh46qe4ygputgoqzlx4/private key"
           TF_VAR_oci_region: op://aws-svcs/gl2ruywhokyxow6x42nb67mdx4/oci_region
           TF_VAR_oci_ssh_authorized_keys: "op://aws-svcs/xf2kkmka32qlvu6jleafrbnyre/public key"
+          # Tailscale variables
+          TF_VAR_tailscale_api_key: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/api_key
+          TF_VAR_tailnet: op://aws-svcs/7f67qgmdvqjl6qghuccxswbham/tailnet
 
       - name: Run re-usable tofu
         uses: ./.github/actions/reusable-tofu
