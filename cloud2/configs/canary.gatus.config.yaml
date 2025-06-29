@@ -1,0 +1,25 @@
+storage:
+  type: sqlite
+  path: /data/data.db
+
+# alerting:
+#   pushover:
+#     application-token: "******************************"
+#     user-key: "******************************"
+
+endpoints:
+  - name: Gatus - Self Test
+    group: canary
+    url: "https://gatus.andywebservices.com/"
+    interval: 60s
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"
+
+  - name: NTFY
+    group: canary
+    url: "https://ntfy.andywebservices.com/"
+    interval: 60s
+    conditions:
+      - "[STATUS] == 200"
+      - "[CERTIFICATE_EXPIRATION] > 48h"

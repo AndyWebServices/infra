@@ -1,0 +1,9 @@
+name: cloud
+description: A minimal AWS Go Pulumi program
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-go
+  cloudflare:apiToken:
+    value: 'eb2B-Gnqs4sk-lhK6jsXT3hUFIZuqrkc800h8VHd'
